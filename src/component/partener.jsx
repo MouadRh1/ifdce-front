@@ -27,7 +27,7 @@ export default function Partener() {
                         Nous collaborons avec des entreprises et des institutions de renommée mondiale pour offrir des opportunités d'apprentissage exceptionnelles.
                     </p>
                 </div>
-                {/* <div className="mt-5">
+                <div className="mt-5">
                     <ul className="flex gap-x-10 gap-y-6 flex-wrap items-center justify-center md:gap-x-16">
                         {
                              partenaires.map((partenaire) => (
@@ -37,7 +37,7 @@ export default function Partener() {
                               ))
                        }
                     </ul>
-                </div> */}
+                </div>
 
                 
             </div>
