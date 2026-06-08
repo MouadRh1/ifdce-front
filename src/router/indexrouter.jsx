@@ -3,7 +3,7 @@ import Layout from "../component/Layout.jsx";
 import Home from "../page/home";
 import About from "../page/about";
 import Authentification from "../page/authentification";
-import Login from "../page/Login";
+import Login from "../page/login";
 import DiplomaDashboard from "../page/DiplomaDashboard";
 import CreateDiploma from "../page/CreateDiploma";
 import { ProtectedRoute, AdminRoute } from "../component/ProtectedRoute";
