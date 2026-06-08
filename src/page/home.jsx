@@ -9,7 +9,7 @@ import Partener from '../component/partener';
 import Cards from '../component/cards';
 import Presentation2 from '../component/presentation2';
 import Bloc from '../component/bloc';
-import  AdditionalInfo from '../component/additionalInfo';
+import  AdditionalInfo from '../component/AdditionalInfo'
 
 export default function Home() {
   const [apiConnected, setApiConnected] = useState(false);
