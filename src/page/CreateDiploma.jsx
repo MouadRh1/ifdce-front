@@ -28,7 +28,7 @@ export default function CreateDiploma() {
     setErrors({});
 
     try {
-      const response = await axios.post('http://localhost:8000/api/diplomas', formData);
+      const response = await axios.post('https://honeydew-vulture-244652.hostingersite.com/api/diplomas', formData);
       
       console.log('Diploma created successfully:', response.data);
       alert('Diploma created successfully!');

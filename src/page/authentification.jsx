@@ -42,7 +42,7 @@ export default function Authentification() {
 
 
   useEffect(() => {
-    api.defaults.baseURL = 'http://localhost:8000/';
+    api.defaults.baseURL = 'https://honeydew-vulture-244652.hostingersite.com/';
     api.defaults.headers.common['Accept'] = 'application/json';
     api.defaults.headers.common['Content-Type'] = 'application/json';
     

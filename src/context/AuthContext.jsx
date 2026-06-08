@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // Call logout API if user is authenticated
       if (token) {
-        await axios.post('http://localhost:8000/api/logout');
+        await axios.post('https://honeydew-vulture-244652.hostingersite.com/api/logout');
       }
     } catch (error) {
       console.error('Logout API error:', error);

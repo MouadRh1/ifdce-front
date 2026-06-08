@@ -31,7 +31,7 @@ export default function AdminDashboard() {
 
     const fetchDashboardData = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/admin/dashboard');
+            const response = await axios.get('https://honeydew-vulture-244652.hostingersite.com/api/admin/dashboard');
             setStats(response.data.stats);
         } catch (error) {
             console.error('Error fetching dashboard data:', error);
@@ -47,7 +47,7 @@ export default function AdminDashboard() {
                 ...(role && { role })
             });
             
-            const response = await axios.get(`http://localhost:8000/api/admin/users?${params}`);
+            const response = await axios.get(`https://honeydew-vulture-244652.hostingersite.com/api/admin/users?${params}`);
             setUsers(response.data.data);
             setLoading(false);
         } catch (error) {
@@ -65,7 +65,7 @@ export default function AdminDashboard() {
                 ...(status && { status })
             });
             
-            const response = await axios.get(`http://localhost:8000/api/admin/enrollments?${params}`);
+            const response = await axios.get(`https://honeydew-vulture-244652.hostingersite.com/api/admin/enrollments?${params}`);
             setEnrollments(response.data.enrollments.data);
         } catch (error) {
             console.error('Error fetching enrollments:', error);
@@ -74,7 +74,7 @@ export default function AdminDashboard() {
 
     const fetchEnrollmentStats = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/admin/enrollments/stats');
+            const response = await axios.get('https://honeydew-vulture-244652.hostingersite.com/api/admin/enrollments/stats');
             setEnrollmentStats(response.data);
         } catch (error) {
             console.error('Error fetching enrollment stats:', error);
@@ -83,7 +83,7 @@ export default function AdminDashboard() {
 
     const fetchUserApplications = async (userId) => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/admin/users/${userId}/applications`);
+            const response = await axios.get(`https://honeydew-vulture-244652.hostingersite.com/api/admin/users/${userId}/applications`);
             setUserApplications(response.data.applications);
             setSelectedUser(response.data.user);
         } catch (error) {
@@ -93,7 +93,7 @@ export default function AdminDashboard() {
 
     const updateApplicationStatus = async (applicationId, newStatus) => {
         try {
-            await axios.put(`http://localhost:8000/api/admin/applications/${applicationId}/status`, {
+            await axios.put(`https://honeydew-vulture-244652.hostingersite.com/api/admin/applications/${applicationId}/status`, {
                 status: newStatus
             });
             fetchEnrollments(currentPage, searchTerm, statusFilter);
@@ -119,7 +119,7 @@ export default function AdminDashboard() {
 
     const updateUserRole = async (userId, newRole) => {
         try {
-            await axios.put(`http://localhost:8000/api/admin/users/${userId}/role`, {
+            await axios.put(`https://honeydew-vulture-244652.hostingersite.com/api/admin/users/${userId}/role`, {
                 role: newRole
             });
             fetchUsers(currentPage, searchTerm, roleFilter);
@@ -134,7 +134,7 @@ export default function AdminDashboard() {
         if (!confirm('Are you sure you want to delete this user?')) return;
         
         try {
-            await axios.delete(`http://localhost:8000/api/admin/users/${userId}`);
+            await axios.delete(`https://honeydew-vulture-244652.hostingersite.com/api/admin/users/${userId}`);
             fetchUsers(currentPage, searchTerm, roleFilter);
             alert('User deleted successfully!');
         } catch (error) {
