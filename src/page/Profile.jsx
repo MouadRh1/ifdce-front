@@ -1,94 +1,126 @@
 import { useState, useEffect } from 'react';
 import { User, Mail, Phone, MapPin, Calendar, BookOpen, Award, Edit2, Save, X, Eye, Download, Clock, CheckCircle } from 'lucide-react';
-import { div } from 'framer-motion/client';
+import { useAuth } from '../context/AuthContext';
+import api from '../config/api';
 
 export default function Profile() {
+    const { user: authUser, token, isAuthenticated } = useAuth();
     const [user, setUser] = useState(null);
     const [enrollments, setEnrollments] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editForm, setEditForm] = useState({});
     const [activeTab, setActiveTab] = useState('profile');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Simulate fetching user data
+        // Vérifier si l'utilisateur est authentifié
+        if (!isAuthenticated()) {
+            window.location.href = '/login';
+            return;
+        }
+        
         fetchUserData();
         fetchEnrollments();
-    }, []);
+    }, [isAuthenticated]);
 
-    const fetchUserData = () => {
-        // Replace with actual API call
-        const userData = {
-            id: 1,
-            name: "Jean Dupont",
-            email: "jean.dupont@email.com",
-            phone: "+33 6 12 34 56 78",
-            address: "123 Rue de la Paix, 75001 Paris",
-            dateOfBirth: "1990-05-15",
-            joinDate: "2024-01-15",
-            profileImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
-        };
-        setUser(userData);
-        setEditForm(userData);
+    const fetchUserData = async () => {
+        try {
+            // Utiliser l'utilisateur du contexte si disponible
+            if (authUser) {
+                const formattedUser = {
+                    id: authUser.id,
+                    name: authUser.name || '',
+                    email: authUser.email || '',
+                    phone: authUser.phone || '',
+                    address: authUser.address || '',
+                    dateOfBirth: authUser.date_of_birth || '',
+                    joinDate: authUser.created_at || new Date().toISOString(),
+                    profileImage: authUser.profile_image || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+                };
+                setUser(formattedUser);
+                setEditForm(formattedUser);
+            }
+            
+            // Optionnel: Récupérer les données actualisées depuis l'API
+            const response = await api.get('/user');
+            if (response.data) {
+                const formattedUser = {
+                    id: response.data.id,
+                    name: response.data.name || '',
+                    email: response.data.email || '',
+                    phone: response.data.phone || '',
+                    address: response.data.address || '',
+                    dateOfBirth: response.data.date_of_birth || '',
+                    joinDate: response.data.created_at || new Date().toISOString(),
+                    profileImage: response.data.profile_image || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+                };
+                setUser(formattedUser);
+                setEditForm(formattedUser);
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement des données utilisateur:', error);
+            if (error.response?.status === 401) {
+                window.location.href = '/login';
+            }
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const fetchEnrollments = () => {
-        // Replace with actual API call
-        const enrollmentData = [
-            {
-                id: 1,
-                courseName: "Master Professionnel Cybersécurité",
-                enrollmentDate: "2024-01-15",
-                status: "En cours",
-                progress: 65,
-                instructor: "Dr. Marie Martin",
-                duration: "24 mois",
-                nextClass: "2024-06-25",
-                documents: [
-                    { name: "Certificat d'inscription", type: "PDF", url: "#" },
-                    { name: "Programme de cours", type: "PDF", url: "#" }
-                ]
-            },
-            {
-                id: 2,
-                courseName: "Technicien Supérieur en Réseaux",
-                enrollmentDate: "2023-09-10",
-                status: "Terminé",
-                progress: 100,
-                instructor: "Prof. Pierre Durand",
-                duration: "18 mois",
-                completionDate: "2024-03-10",
-                grade: "Mention Bien",
-                documents: [
-                    { name: "Diplôme", type: "PDF", url: "#" },
-                    { name: "Relevé de notes", type: "PDF", url: "#" }
-                ]
-            },
-            {
-                id: 3,
-                courseName: "Formation VAE Comptabilité",
-                enrollmentDate: "2024-03-01",
-                status: "En attente",
-                progress: 20,
-                instructor: "Mme. Sophie Bernard",
-                duration: "12 mois",
-                nextClass: "2024-07-01",
-                documents: [
-                    { name: "Dossier VAE", type: "PDF", url: "#" }
-                ]
+    const fetchEnrollments = async () => {
+        try {
+            const response = await api.get('/admin/enrollments');
+            let enrollmentsData = [];
+            
+            if (Array.isArray(response.data)) {
+                enrollmentsData = response.data;
+            } else if (response.data.data && Array.isArray(response.data.data)) {
+                enrollmentsData = response.data.data;
             }
-        ];
-        setEnrollments(enrollmentData);
+            
+            const formattedEnrollments = enrollmentsData.map(enrollment => ({
+                id: enrollment.id,
+                courseName: enrollment.diploma?.name || enrollment.course_name || "Formation",
+                enrollmentDate: enrollment.enrollment_date || enrollment.created_at || new Date().toISOString(),
+                status: enrollment.status || "En cours",
+                progress: enrollment.progress || 0,
+                instructor: enrollment.instructor || "À déterminer",
+                duration: enrollment.diploma?.duration_years + " ans" || "Non spécifié",
+                nextClass: enrollment.next_class_date || null,
+                completionDate: enrollment.completed_at || null,
+                grade: enrollment.grade || null,
+                documents: enrollment.documents || []
+            }));
+            
+            setEnrollments(formattedEnrollments);
+        } catch (error) {
+            console.error('Erreur lors du chargement des inscriptions:', error);
+            setEnrollments([]);
+        }
     };
 
     const handleEdit = () => {
         setIsEditing(true);
     };
 
-    const handleSave = () => {
-        // API call to update user data
-        setUser(editForm);
-        setIsEditing(false);
-        // Show success message
+    const handleSave = async () => {
+        try {
+            await api.put('/user', {
+                name: editForm.name,
+                email: editForm.email,
+                phone: editForm.phone,
+                address: editForm.address,
+                date_of_birth: editForm.dateOfBirth
+            });
+            
+            setUser(editForm);
+            setIsEditing(false);
+            alert('Profil mis à jour avec succès !');
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour:', error);
+            alert('Erreur lors de la mise à jour du profil');
+        }
     };
 
     const handleCancel = () => {
@@ -97,27 +129,51 @@ export default function Profile() {
     };
 
     const getStatusColor = (status) => {
-        switch (status) {
-            case 'En cours': return 'bg-blue-100 text-blue-800';
-            case 'Terminé': return 'bg-green-100 text-green-800';
-            case 'En attente': return 'bg-yellow-100 text-yellow-800';
-            default: return 'bg-gray-100 text-gray-800';
+        switch (status?.toLowerCase()) {
+            case 'en cours':
+            case 'active':
+                return 'bg-blue-100 text-blue-800';
+            case 'terminé':
+            case 'completed':
+                return 'bg-green-100 text-green-800';
+            case 'en attente':
+            case 'pending':
+                return 'bg-yellow-100 text-yellow-800';
+            default:
+                return 'bg-gray-100 text-gray-800';
         }
     };
 
     const getStatusIcon = (status) => {
-        switch (status) {
-            case 'En cours': return <Clock className="w-4 h-4" />;
-            case 'Terminé': return <CheckCircle className="w-4 h-4" />;
-            case 'En attente': return <Eye className="w-4 h-4" />;
-            default: return <BookOpen className="w-4 h-4" />;
+        switch (status?.toLowerCase()) {
+            case 'en cours':
+            case 'active':
+                return <Clock className="w-4 h-4" />;
+            case 'terminé':
+            case 'completed':
+                return <CheckCircle className="w-4 h-4" />;
+            case 'en attente':
+            case 'pending':
+                return <Eye className="w-4 h-4" />;
+            default:
+                return <BookOpen className="w-4 h-4" />;
         }
     };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+            </div>
+        );
+    }
 
     if (!user) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+                <div className="text-center">
+                    <p className="text-gray-600">Chargement...</p>
+                </div>
             </div>
         );
     }
@@ -150,11 +206,11 @@ export default function Profile() {
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Phone className="w-4 h-4" />
-                                    <span>{user.phone}</span>
+                                    <span>{user.phone || 'Non renseigné'}</span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <MapPin className="w-4 h-4" />
-                                    <span>{user.address}</span>
+                                    <span>{user.address || 'Non renseigné'}</span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Calendar className="w-4 h-4" />
@@ -195,7 +251,7 @@ export default function Profile() {
                                         : 'border-transparent text-gray-500 hover:text-gray-700'
                                 }`}
                             >
-                                Mes inscriptions
+                                Mes inscriptions ({enrollments.length})
                             </button>
                             <button
                                 onClick={() => setActiveTab('documents')}
@@ -277,7 +333,7 @@ export default function Profile() {
                                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         />
                                     ) : (
-                                        <p className="text-gray-900">{user.phone}</p>
+                                        <p className="text-gray-900">{user.phone || 'Non renseigné'}</p>
                                     )}
                                 </div>
 
@@ -291,7 +347,9 @@ export default function Profile() {
                                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         />
                                     ) : (
-                                        <p className="text-gray-900">{new Date(user.dateOfBirth).toLocaleDateString('fr-FR')}</p>
+                                        <p className="text-gray-900">
+                                            {user.dateOfBirth ? new Date(user.dateOfBirth).toLocaleDateString('fr-FR') : 'Non renseigné'}
+                                        </p>
                                     )}
                                 </div>
 
@@ -305,7 +363,7 @@ export default function Profile() {
                                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         />
                                     ) : (
-                                        <p className="text-gray-900">{user.address}</p>
+                                        <p className="text-gray-900">{user.address || 'Non renseigné'}</p>
                                     )}
                                 </div>
                             </div>
@@ -317,85 +375,78 @@ export default function Profile() {
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-6">Mes inscriptions</h2>
                             
-                            <div className="space-y-6">
-                                {enrollments.map((enrollment) => (
-                                    <div key={enrollment.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                                        <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                                            <div>
-                                                <h3 className="text-xl font-semibold text-gray-900 mb-2">{enrollment.courseName}</h3>
-                                                <p className="text-gray-600">Instructeur: {enrollment.instructor}</p>
+                            {enrollments.length === 0 ? (
+                                <div className="text-center py-12">
+                                    <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                                    <p className="text-gray-500">Vous n'êtes inscrit à aucune formation pour le moment.</p>
+                                </div>
+                            ) : (
+                                <div className="space-y-6">
+                                    {enrollments.map((enrollment) => (
+                                        <div key={enrollment.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                                            <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                                                <div>
+                                                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{enrollment.courseName}</h3>
+                                                    <p className="text-gray-600">Instructeur: {enrollment.instructor}</p>
+                                                </div>
+                                                <div className="flex items-center gap-2 mt-2 md:mt-0">
+                                                    {getStatusIcon(enrollment.status)}
+                                                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(enrollment.status)}`}>
+                                                        {enrollment.status}
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <div className="flex items-center gap-2 mt-2 md:mt-0">
-                                                {getStatusIcon(enrollment.status)}
-                                                <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(enrollment.status)}`}>
-                                                    {enrollment.status}
-                                                </span>
-                                            </div>
-                                        </div>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                            <div>
-                                                <p className="text-sm text-gray-500">Date d'inscription</p>
-                                                <p className="font-medium">{new Date(enrollment.enrollmentDate).toLocaleDateString('fr-FR')}</p>
+                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                                <div>
+                                                    <p className="text-sm text-gray-500">Date d'inscription</p>
+                                                    <p className="font-medium">{new Date(enrollment.enrollmentDate).toLocaleDateString('fr-FR')}</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm text-gray-500">Durée</p>
+                                                    <p className="font-medium">{enrollment.duration}</p>
+                                                </div>
+                                                {enrollment.nextClass && (
+                                                    <div>
+                                                        <p className="text-sm text-gray-500">Prochain cours</p>
+                                                        <p className="font-medium">{new Date(enrollment.nextClass).toLocaleDateString('fr-FR')}</p>
+                                                    </div>
+                                                )}
+                                                {enrollment.completionDate && (
+                                                    <div>
+                                                        <p className="text-sm text-gray-500">Date de fin</p>
+                                                        <p className="font-medium">{new Date(enrollment.completionDate).toLocaleDateString('fr-FR')}</p>
+                                                    </div>
+                                                )}
                                             </div>
-                                            <div>
-                                                <p className="text-sm text-gray-500">Durée</p>
-                                                <p className="font-medium">{enrollment.duration}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-sm text-gray-500">
-                                                    {enrollment.status === 'Terminé' ? 'Date de fin' : 'Prochain cours'}
-                                                </p>
-                                                <p className="font-medium">
-                                                    {enrollment.status === 'Terminé' 
-                                                        ? new Date(enrollment.completionDate).toLocaleDateString('fr-FR')
-                                                        : new Date(enrollment.nextClass).toLocaleDateString('fr-FR')
-                                                    }
-                                                </p>
-                                            </div>
-                                        </div>
 
-                                        {/* Progress Bar */}
-                                        <div className="mb-4">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <span className="text-sm text-gray-600">Progression</span>
-                                                <span className="text-sm font-medium text-gray-900">{enrollment.progress}%</span>
-                                            </div>
-                                            <div className="w-full bg-gray-200 rounded-full h-2">
-                                                <div 
-                                                    className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                                                    style={{ width: `${enrollment.progress}%` }}
-                                                ></div>
-                                            </div>
-                                        </div>
+                                            {enrollment.progress > 0 && (
+                                                <div className="mb-4">
+                                                    <div className="flex justify-between items-center mb-2">
+                                                        <span className="text-sm text-gray-600">Progression</span>
+                                                        <span className="text-sm font-medium text-gray-900">{enrollment.progress}%</span>
+                                                    </div>
+                                                    <div className="w-full bg-gray-200 rounded-full h-2">
+                                                        <div 
+                                                            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                                                            style={{ width: `${enrollment.progress}%` }}
+                                                        ></div>
+                                                    </div>
+                                                </div>
+                                            )}
 
-                                        {enrollment.grade && (
-                                            <div className="mb-4">
-                                                <span className="inline-flex items-center gap-2 bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
-                                                    <Award className="w-4 h-4" />
-                                                    {enrollment.grade}
-                                                </span>
-                                            </div>
-                                        )}
-
-                                        {/* Documents */}
-                                        <div>
-                                            <p className="text-sm text-gray-600 mb-2">Documents disponibles:</p>
-                                            <div className="flex flex-wrap gap-2">
-                                                {enrollment.documents.map((doc, index) => (
-                                                    <button
-                                                        key={index}
-                                                        className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg text-sm transition-colors"
-                                                    >
-                                                        <Download className="w-4 h-4" />
-                                                        {doc.name}
-                                                    </button>
-                                                ))}
-                                            </div>
+                                            {enrollment.grade && (
+                                                <div className="mb-4">
+                                                    <span className="inline-flex items-center gap-2 bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                                                        <Award className="w-4 h-4" />
+                                                        {enrollment.grade}
+                                                    </span>
+                                                </div>
+                                            )}
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     )}
 
@@ -403,32 +454,14 @@ export default function Profile() {
                     {activeTab === 'documents' && (
                         <div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-6">Mes documents</h2>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {enrollments.flatMap(enrollment => 
-                                    enrollment.documents.map((doc, index) => (
-                                        <div key={`${enrollment.id}-${index}`} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                                            <div className="flex items-center gap-3 mb-3">
-                                                <div className="bg-red-100 p-2 rounded-lg">
-                                                    <Download className="w-6 h-6 text-red-600" />
-                                                </div>
-                                                <div className="flex-1">
-                                                    <h3 className="font-medium text-gray-900">{doc.name}</h3>
-                                                    <p className="text-sm text-gray-500">{enrollment.courseName}</p>
-                                                </div>
-                                            </div>
-                                            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors">
-                                                Télécharger
-                                            </button>
-                                        </div>
-                                    ))
-                                )}
+                            <div className="text-center py-12">
+                                <Download className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                                <p className="text-gray-500">Fonctionnalité à venir</p>
                             </div>
                         </div>
                     )}
                 </div>
             </div>
         </div>
-      
     );
 }

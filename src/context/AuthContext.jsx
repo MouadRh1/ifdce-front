@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }) => {
     
      if (storedUser && storedToken) {
       const parsedUser = JSON.parse(storedUser);
-      console.log('🔍 User role from localStorage:', parsedUser.role);
       setUser(parsedUser);
       setToken(storedToken);
       axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
@@ -44,7 +43,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // Call logout API if user is authenticated
       if (token) {
-        await axios.post('https://honeydew-vulture-244652.hostingersite.com/api/logout');
+        await axios.post('https://linen-sheep-933989.hostingersite.com/api/logout');
       }
     } catch (error) {
       console.error('Logout API error:', error);
@@ -63,9 +62,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const isAdmin = () => {
-    console.log('🔍 isAdmin check - user:', user);
-    console.log('🔍 isAdmin check - user.role:', user?.role);
-    console.log('🔍 isAdmin result:', user?.role === 'admin');
+
     return user?.role === 'admin';
   };
 

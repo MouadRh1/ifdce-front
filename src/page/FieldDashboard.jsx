@@ -25,7 +25,7 @@ export default function FieldDashboard() {
 
   const fetchFields = async () => {
     try {
-      const response = await axios.get('https://honeydew-vulture-244652.hostingersite.com/api/fields');
+      const response = await axios.get('https://linen-sheep-933989.hostingersite.com/api/fields');
       setFields(response.data);
     } catch (error) {
       console.error('Error fetching fields:', error);
@@ -34,7 +34,7 @@ export default function FieldDashboard() {
 
   const fetchDiplomas = async () => {
     try {
-      const response = await axios.get('https://honeydew-vulture-244652.hostingersite.com/api/available-diplomas');
+      const response = await axios.get('https://linen-sheep-933989.hostingersite.com/api/available-diplomas');
       setDiplomas(response.data);
     } catch (error) {
       console.error('Error fetching diplomas:', error);
@@ -70,11 +70,11 @@ export default function FieldDashboard() {
     try {
       if (editingField) {
         // Update existing field
-        await axios.put(`https://honeydew-vulture-244652.hostingersite.com/api/fields/${editingField.id}`, formData);
+        await axios.put(`https://linen-sheep-933989.hostingersite.com/api/fields/${editingField.id}`, formData);
         alert('Field updated successfully!');
       } else {
         // Create new field
-        await axios.post('https://honeydew-vulture-244652.hostingersite.com/api/fields', formData);
+        await axios.post('https://linen-sheep-933989.hostingersite.com/api/fields', formData);
         alert('Field created successfully!');
       }
       
@@ -107,7 +107,7 @@ export default function FieldDashboard() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this field?')) {
       try {
-        await axios.delete(`https://honeydew-vulture-244652.hostingersite.com/api/fields/${id}`);
+        await axios.delete(`https://linen-sheep-933989.hostingersite.com/api/fields/${id}`);
         alert('Field deleted successfully!');
         fetchFields(); // Refresh the list
       } catch (error) {

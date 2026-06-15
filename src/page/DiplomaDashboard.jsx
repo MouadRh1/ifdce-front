@@ -23,7 +23,7 @@ export default function DiplomaDashboard() {
 
   const fetchDiplomas = async () => {
     try {
-      const response = await axios.get('https://honeydew-vulture-244652.hostingersite.com/api/diplomas');
+      const response = await axios.get('https://linen-sheep-933989.hostingersite.com/api/diplomas');
       setDiplomas(response.data);
     } catch (error) {
       console.error('Error fetching diplomas:', error);
@@ -59,11 +59,11 @@ export default function DiplomaDashboard() {
     try {
       if (editingDiploma) {
         // Update existing diploma
-        await axios.put(`https://honeydew-vulture-244652.hostingersite.com/api/diplomas/${editingDiploma.id}`, formData);
+        await axios.put(`https://linen-sheep-933989.hostingersite.com/api/diplomas/${editingDiploma.id}`, formData);
         alert('Diploma updated successfully!');
       } else {
         // Create new diploma
-        await axios.post('https://honeydew-vulture-244652.hostingersite.com/api/diplomas', formData);
+        await axios.post('https://linen-sheep-933989.hostingersite.com/api/diplomas', formData);
         alert('Diploma created successfully!');
       }
       
@@ -96,7 +96,7 @@ export default function DiplomaDashboard() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this diploma? This will also delete all associated fields.')) {
       try {
-        await axios.delete(`https://honeydew-vulture-244652.hostingersite.com/api/diplomas/${id}`);
+        await axios.delete(`https://linen-sheep-933989.hostingersite.com/api/diplomas/${id}`);
         alert('Diploma deleted successfully!');
         fetchDiplomas(); // Refresh the list
       } catch (error) {

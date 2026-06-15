@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import api from '../config/api';
-import axios from 'axios'; // Ajoutez cette ligne pour importer axios
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Utiliser le contexte d'authentification
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -23,6 +24,9 @@ export default function Login() {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: null }));
     }
+    if (errors.general) {
+      setErrors(prev => ({ ...prev, general: null }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -36,24 +40,29 @@ export default function Login() {
         password: formData.password,
       });
 
-      // Store user data and token
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      localStorage.setItem('token', response.data.token);
-      
-      // Set axios default authorization header
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
 
-      // console.log('Login successful:', response.data);
-      alert('Login successful! Welcome back.');
-      window.location.href = '/';
+      // Utiliser la fonction login du contexte
+      if (response.data.user && response.data.token) {
+        login(response.data.user, response.data.token);
+        
+        alert('Login successful! Welcome back.');
+        
+        // Rediriger vers la page d'accueil ou le profil
+        navigate('/');
+      } else {
+        setErrors({ general: 'Réponse invalide du serveur' });
+      }
       
     } catch (error) {
-      // console.error('Login error:', error);
       
-      if (error.response?.data?.errors) {
+      if (error.response?.status === 401) {
+        setErrors({ general: 'Email ou mot de passe incorrect' });
+      } else if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
       } else if (error.response?.data?.message) {
         setErrors({ general: error.response.data.message });
+      } else if (error.code === 'ECONNABORTED') {
+        setErrors({ general: 'Le serveur ne répond pas. Veuillez réessayer.' });
       } else {
         setErrors({ general: 'Login failed. Please try again.' });
       }

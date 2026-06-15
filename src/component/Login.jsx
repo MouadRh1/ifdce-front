@@ -27,18 +27,12 @@ export default function Login() {
         password: formData.password,
       });
 
-      console.log('🔍 Login: API response:', response.data);
-      console.log('🔍 Login: User data:', response.data.user);
-      console.log('🔍 Login: User role:', response.data.user?.role);
 
       // Use the context login function
       login(response.data.user, response.data.token);
 
       // Add a small delay to ensure state is updated
-      setTimeout(() => {
-        console.log('🔍 Login: Navigation triggered');
-        navigate('/');
-      }, 100);
+      
       
     } catch (error) {
       console.error('Login error:', error);

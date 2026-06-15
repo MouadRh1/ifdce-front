@@ -26,7 +26,7 @@ const Register = () => {
         setErrors({});
 
         try {
-            const response = await axios.post('https://honeydew-vulture-244652.hostingersite.com/api/register', formData);
+            const response = await axios.post('https://linen-sheep-933989.hostingersite.com/api/register', formData);
             
             // Store the token in localStorage
             localStorage.setItem('token', response.data.token);

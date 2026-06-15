@@ -42,7 +42,7 @@ export default function Authentification() {
 
 
   useEffect(() => {
-    api.defaults.baseURL = 'https://honeydew-vulture-244652.hostingersite.com/';
+    api.defaults.baseURL = 'https://linen-sheep-933989.hostingersite.com/';
     api.defaults.headers.common['Accept'] = 'application/json';
     api.defaults.headers.common['Content-Type'] = 'application/json';
     
@@ -161,7 +161,6 @@ export default function Authentification() {
         diploma_fields: diplomaFields
       });
       
-      console.log('Registration successful:', response.data);
       localStorage.setItem('user', JSON.stringify(response.data.user));
       alert('Registration successful! Your diploma field selections are pending approval.');
       navigate('/');
