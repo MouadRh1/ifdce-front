@@ -1,5 +1,6 @@
+// src/context/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import api, { setToken, removeToken, getToken } from '../config/api';
 
 const AuthContext = createContext();
 
@@ -13,19 +14,25 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [token, setTokenState] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Initialize auth state from localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-    const storedToken = localStorage.getItem('token');
+    const storedToken = getToken(); // Utiliser la fonction unifiée
     
-     if (storedUser && storedToken) {
-      const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
-      setToken(storedToken);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+    if (storedUser && storedToken) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setTokenState(storedToken);
+        // Configurer le token pour axios
+        api.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+      } catch (error) {
+        removeToken();
+      }
+    } else {
     }
     
     setLoading(false);
@@ -33,36 +40,32 @@ export const AuthProvider = ({ children }) => {
 
   const login = (userData, authToken) => {
     setUser(userData);
+    setTokenState(authToken);
+    // Utiliser la fonction unifiée
     setToken(authToken);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('token', authToken);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+    // console.log('[Auth] Connexion réussie:', userData.email);
   };
 
   const logout = async () => {
     try {
-      // Call logout API if user is authenticated
       if (token) {
-        await axios.post('https://linen-sheep-933989.hostingersite.com/api/logout');
+        await api.post('/logout');
       }
     } catch (error) {
-      console.error('Logout API error:', error);
     } finally {
-      // Clear local state and storage regardless of API call result
       setUser(null);
-      setToken(null);
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
-      delete axios.defaults.headers.common['Authorization'];
+      setTokenState(null);
+      removeToken();
+      // console.log('[Auth] Déconnexion complète');
+      window.location.href = '/login';
     }
   };
 
   const isAuthenticated = () => {
-    return !!(user && token);
+    return !!(user && getToken());
   };
 
   const isAdmin = () => {
-
     return user?.role === 'admin';
   };
 

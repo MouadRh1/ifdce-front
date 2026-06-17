@@ -9,6 +9,7 @@ import CreateDiploma from "../page/CreateDiploma";
 import { ProtectedRoute, AdminRoute } from "../component/ProtectedRoute";
 import FieldDashboard from "../page/FieldDashboard";
 // import About from "../page/about.jsx";
+import FormationDetail from "../page/FormationDetail.jsx";
 import Notfound from "../page/notfound.jsx";
 import AdminDashboard from "../component/AdminDashboard";
 import Contact from "../page/contact";
@@ -19,6 +20,8 @@ import LicenceProfessionnelle from "../page/LicenceProfessionnelle.jsx"; // Add 
 import VAEPage from "../page/VAEPage.jsx"; // Add this import
 import MasterProfessionnel from "../page/MasterProfessionnel.jsx"; // Add this import
 import Profile from "../page/Profile.jsx"; // Add this import
+import VAERequest from "../page/VAERequest.jsx";
+import AllFormations from "../page/AllFormations.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +52,10 @@ export const router = createBrowserRouter([
         element: <Authentification />,
       },
       {
+        path: "/formations/:slug",
+        element: <FormationDetail/>,
+      },
+      {
         path: "/techaidecomptable",
         element: <Techaidecomptable />,
       },
@@ -60,9 +67,42 @@ export const router = createBrowserRouter([
         path: "/LicenceProfessionnelle",
         element: <LicenceProfessionnelle />,
       },
+      // ROUTES VAE OPTIMISÉES SEO
       {
-        path: "/VAEPage",
+        path: "/validation-acquis-experience",
         element: <VAEPage />,
+      },
+      {
+        path: "/vae-maroc",
+        element: <VAEPage />,
+      },
+      {
+        path: "/vae",
+        element: <VAEPage />,
+      },
+      {
+        path: "/vae/demande",
+        element: <VAERequest />,
+      },
+      {
+        path: "/obtenir-diplome-par-experience",
+        element: <VAEPage />,
+      },
+      {
+        path: "/reconnaissance-competences-professionnelles",
+        element: <VAEPage />,
+      },
+      {
+        path: "/VAE",
+        element: <VAEPage />,
+      },
+      {
+        path: "/formations",
+        element: <AllFormations/> ,
+      },
+      {
+        path: "/inscription-vae",
+        element: <VAERequest/>,
       },
       {
         path: "/contact",

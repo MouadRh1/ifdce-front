@@ -97,7 +97,7 @@ export default function Navbar() {
         { path: "/TechnicienSuperieur", name: "Technicien Supérieur", icon: license },
         { path: "/LicenceProfessionnelle", name: "Licence Professionnelle", icon: techsp },
         { path: "/MasterProfessionnel", name: "Master Professionnel", icon: master },
-        { path: "/VAEPage", name: "VAE", icon: vaeicon },
+        { path: "/VAE", name: "VAE", icon: vaeicon },
     ];
 
     return (

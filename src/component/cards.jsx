@@ -1,33 +1,35 @@
+// src/component/cards.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Cards() {
     const posts = [
         {
             title: "Activités principales",
-            desc: "Formations diplômantes : technicien et TS, Licences et Masters professionnels 100% en ligne - Validation des acquis de l'expérience : accompagnement personnalisé - Formations certifiantes dans divers domaines : droit, économie, management, informatique, infographie, etc. - Conseil en ingénierie de formation et accompagnement des entreprises",
+            desc: "Formations diplômantes : technicien et TS, Licences et Masters professionnels Formation hybride (présentiel et distanciel) - Validation des acquis de l'expérience : accompagnement personnalisé - Formations certifiantes dans divers domaines : droit, économie, management, informatique, infographie, etc. - Conseil en ingénierie de formation et accompagnement des entreprises",
             img: "https://images.unsplash.com/photo-1556155092-490a1ba16284?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-            href: "javascript:void(0)",
+            link: "/formations",
             note: "MBA:"
         },
         {
             title: "Pourquoi choisir IFDCE ?",
-            desc: "Diplômes français (T,TS, licence, master, MBA, Doctorat) Formations flexibles et en ligne Accompagnement sur mesure Reconnaissance européenne. La vraie question, c'est : qu'est-ce que vous attendez ?",
+            desc: "Diplômes français (T, TS, licence, master, MBA, Doctorat) Formations flexibles et en ligne Accompagnement sur mesure Reconnaissance européenne. La vraie question, c'est : qu'est-ce que vous attendez ?",
             img: "https://images.unsplash.com/photo-1620287341056-49a2f1ab2fdc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-            href: "javascript:void(0)"
+            link: "/about"
         },
         {
             title: "Reconnaissance et Partenariat",
             desc: "Les diplômes sont délivrés en partenariat avec des organismes français et anglais. Tous les parcours sont alignés sur les standards européens, avec une reconnaissance en France et dans l'Union Européenne.",
             img: "https://img.freepik.com/photos-premium/etiquette-connexion-affaires-png-fond-transparent-bordure-blanche_53876-942175.jpg?w=2000",
-            href: "javascript:void(0)"
+            link: "/partenaires"
         },
         {
             title: "Public Cible",
             desc: "Nos formations et dispositifs s'adressent aux : - Professionnels en activité - Demandeurs d'emploi - Cadres et techniciens souhaitant évoluer - Personnes en reconversion - Étudiants cherchant une alternative flexible.",
             img: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-            href: "javascript:void(0)"
+            link: "/about"
         }
-    ]
+    ];
 
     return (
         <section className="py-16 bg-gray-50">
@@ -62,14 +64,11 @@ export default function Cards() {
                                 <p className="text-gray-600 text-lg leading-relaxed mb-6">
                                     {posts[0].desc}
                                 </p>
-                                {/* {posts[0].note && (     // <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
-                                    //     <p className="text-yellow-800 font-medium">{posts[0].note}</p>
-                                    // </div>
-                               
-                                )} */}
-                                {/* <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200">
-                                    En savoir plus
-                                </button> */}
+                                <Link to={posts[0].link}>
+                                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200">
+                                        Découvrir nos formations
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -79,7 +78,7 @@ export default function Cards() {
                 <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                     {posts.slice(1).map((item, key) => (
                         <li className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" key={key + 1}>
-                            <a href={item.href} className="block">
+                            <Link to={item.link} className="block">
                                 <div className="relative">
                                     <img 
                                         src={item.img} 
@@ -90,7 +89,7 @@ export default function Cards() {
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                                 </div>
                                 <div className="p-6">
-                                    <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors duration-200">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-3 hover:text-blue-600 transition-colors duration-200">
                                         {item.title}
                                     </h3>
                                     <p className="text-gray-600 leading-relaxed line-clamp-4">
@@ -103,11 +102,11 @@ export default function Cards() {
                                         </svg>
                                     </div>
                                 </div>
-                            </a>
+                            </Link>
                         </li>
                     ))}
                 </ul>
             </div>
         </section>
-    )
+    );
 }

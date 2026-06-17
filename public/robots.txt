@@ -1,0 +1,42 @@
+# robots.txt
+# https://ifdce.ma/robots.txt
+
+User-agent: *
+Allow: /
+Allow: /validation-acquis-experience
+Allow: /vae-maroc
+Allow: /vae
+Allow: /obtenir-diplome-par-experience
+Allow: /reconnaissance-competences-professionnelles
+Allow: /vae/demande
+Allow: /formations
+Allow: /LicenceProfessionnelle
+Allow: /MasterProfessionnel
+Allow: /Technicien
+Allow: /TechnicienSuperieur
+Allow: /about
+Allow: /contact
+Allow: /authentification
+Allow: /login
+
+# Bloquer les pages d'administration
+Disallow: /admin-dashboard
+Disallow: /diploma-dashboard
+Disallow: /field-dashboard
+Disallow: /create-diploma
+Disallow: /profile
+
+# Bloquer les fichiers sensibles
+Disallow: /api/
+Disallow: /assets/
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Sitemap
+Sitemap: https://ifdce.ma/sitemap.xml
+
+# Crawl delay (optionnel)
+Crawl-delay: 2
+
+# Host (optionnel)
+Host: https://ifdce.ma

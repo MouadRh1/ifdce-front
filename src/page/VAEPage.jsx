@@ -15,13 +15,41 @@ import {
   Briefcase,
   GraduationCap,
   Star,
-  ArrowRight
+  ArrowRight,
+  Download,
+  CalendarDays
 } from 'lucide-react';
-import { div } from 'framer-motion/client';
 
 const VAEPage = () => {
   const [activeTab, setActiveTab] = useState('overview');
 
+  // ─── Handlers boutons ───────────────────────────────────────────────────────
+  const handleCommencerVAE = () => {
+    // Redirige vers le formulaire de demande VAE / création de compte candidat
+    window.location.href = '/inscription-vae'; // ← adapter selon le routeur (Next.js : router.push('/inscription-vae'))
+  };
+
+  const handleRendezVous = () => {
+    // Redirige vers le formulaire de prise de rendez-vous
+    window.location.href = '/contact?objet=rendez-vous-vae';
+  };
+
+  const handleTelechargerGuide = () => {
+    // Si un PDF est dispo, remplacer l'URL ci-dessous par le lien direct
+    // Ex : window.open('/guides/guide-vae.pdf', '_blank');
+    // En attendant, redirige vers un formulaire de demande d'information
+    window.location.href = '/contact?objet=guide-vae';
+  };
+
+  const handleEnSavoirPlus = () => {
+    setActiveTab('overview');
+    // Scroll doux vers la section de contenu
+    setTimeout(() => {
+      document.getElementById('vae-content')?.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+  };
+
+  // ─── Données ─────────────────────────────────────────────────────────────────
   const benefits = [
     {
       icon: <Award className="w-6 h-6" />,
@@ -77,48 +105,26 @@ const VAEPage = () => {
     }
   ];
 
-  const domains = [
-    "Arts, lettres et langues",
-    "Droit, économie, gestion",
-    "Métiers de l'enseignement",
-    "Sciences humaines et sociales",
-    "Sciences, technologies et sciences de l'ingénieur",
-    "Santé & Sport"
-  ];
-
+  // 4.2 — Liste diplômes mise à jour
   const diplomas = [
-    "DUT",
-    "Licences professionnelles",
-    "Masters",
-    "Diplômes d'ingénieurs",
-    "Doctorats",
-    "DBA",
-    "MBA"
+    "Technicien",
+    "Technicien Spécialisé",
+    "Licence Professionnelle",
+    "Master Professionnel",
+    "Doctorat Professionnel",
+    "MPI (Master Professionnel International)",
+    "DBA (Doctorate of Business Administration)",
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Breadcrumb */}
-      {/* <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <nav className="flex items-center space-x-2 text-sm">
-            <Home className="w-4 h-4 text-gray-400" />
-            <span className="text-gray-400">/</span>
-            <span className="text-gray-900 font-medium">Accueil</span>
-            <span className="text-gray-400">/</span>
-            <span className="text-blue-600 font-medium">VAE</span>
-          </nav>
-        </div>
-      </div> */}
 
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 text-white py-20 overflow-hidden">
-        {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.4%22%3E%3Ccircle%20cx%3D%227%22%20cy%3D%227%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></div>
         </div>
 
-        {/* Decorative Elements */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500 rounded-full opacity-20 transform translate-x-48 -translate-y-48"></div>
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-400 rounded-full opacity-15 transform -translate-x-40 translate-y-40"></div>
 
@@ -143,11 +149,19 @@ const VAEPage = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="inline-flex items-center bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
+                {/* ✅ Bouton "Commencer ma VAE" — opérationnel */}
+                <button
+                  onClick={handleCommencerVAE}
+                  className="inline-flex items-center justify-center bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                >
                   Commencer ma VAE
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </button>
-                <button className="inline-flex items-center border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-all duration-200">
+
+                <button
+                  onClick={handleEnSavoirPlus}
+                  className="inline-flex items-center justify-center border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-purple-600 transition-all duration-200"
+                >
                   En savoir plus
                 </button>
               </div>
@@ -175,10 +189,10 @@ const VAEPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-8 overflow-x-auto">
             {[
-              { id: 'overview', label: 'Qu\'est-ce que la VAE ?', icon: BookOpen },
-              { id: 'benefits', label: 'Avantages', icon: TrendingUp },
-              { id: 'support', label: 'Accompagnement', icon: Users },
-              { id: 'eligibility', label: 'Éligibilité', icon: CheckCircle }
+              { id: 'overview',     label: "Qu'est-ce que la VAE ?", icon: BookOpen },
+              { id: 'benefits',     label: 'Avantages',              icon: TrendingUp },
+              { id: 'support',      label: 'Accompagnement',         icon: Users },
+              { id: 'eligibility',  label: 'Éligibilité',            icon: CheckCircle }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -198,10 +212,11 @@ const VAEPage = () => {
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div id="vae-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        {/* ── Onglet : Qu'est-ce que la VAE ? ── */}
         {activeTab === 'overview' && (
           <div className="space-y-8">
-            {/* Definition */}
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <div className="flex items-center mb-6">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-100 text-purple-600 rounded-full mr-4">
@@ -217,38 +232,43 @@ const VAEPage = () => {
                   Cette expérience, en lien direct avec la certification visée, est validée par un jury.
                 </p>
                 <p className="text-lg">
-                  Nous vous informons sur la procédure VAE pour tous les diplômes de FIEP : <strong>DUT, licences professionnelles, masters, diplômes d'ingénieurs, doctorats, DBA, MBA</strong>
+                  Nous vous informons sur la procédure VAE pour tous les diplômes de FIEP :{' '}
+                  <strong>Technicien, Technicien Spécialisé, Licence Professionnelle, Master Professionnel, Doctorat Professionnel, MPI, DBA</strong>.
                 </p>
               </div>
             </div>
 
-            {/* Domains and Diplomas */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Domains */}
+
+              {/* 4.3 — Domaines : texte générique */}
               <div className="bg-white rounded-2xl shadow-lg p-8">
                 <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
                   <GraduationCap className="w-6 h-6 text-blue-600 mr-3" />
-                  Domaines disponibles
+                  Domaines couverts
                 </h3>
-                <div className="space-y-3">
-                  {domains.map((domain, index) => (
-                    <div key={index} className="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors duration-200">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                      <span className="text-gray-800 font-medium">{domain}</span>
-                    </div>
-                  ))}
+                <div className="bg-blue-50 border-l-4 border-blue-400 p-5 rounded-r-xl">
+                  <p className="text-blue-900 text-base leading-relaxed">
+                    La VAE est accessible dans <strong>l'ensemble des domaines professionnels et secteurs d'activité</strong>, sous réserve de l'existence d'un référentiel de compétences correspondant.
+                  </p>
                 </div>
+                <p className="text-gray-500 text-sm mt-4 leading-relaxed">
+                  Quel que soit votre secteur — industrie, santé, commerce, numérique, éducation, services, etc. — nos conseillers vérifient avec vous l'existence d'une certification adaptée à votre profil.
+                </p>
               </div>
 
-              {/* Diplomas */}
+              {/* 4.2 — Diplômes accessibles mis à jour */}
               <div className="bg-white rounded-2xl shadow-lg p-8">
                 <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
                   <Award className="w-6 h-6 text-purple-600 mr-3" />
                   Diplômes accessibles
                 </h3>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-3">
                   {diplomas.map((diploma, index) => (
-                    <div key={index} className="bg-purple-50 text-purple-700 text-center py-3 px-4 rounded-lg font-semibold hover:bg-purple-100 transition-colors duration-200">
+                    <div
+                      key={index}
+                      className="flex items-center bg-purple-50 hover:bg-purple-100 transition-colors duration-200 text-purple-700 py-3 px-4 rounded-lg font-semibold"
+                    >
+                      <div className="w-2 h-2 bg-purple-500 rounded-full mr-3 flex-shrink-0"></div>
                       {diploma}
                     </div>
                   ))}
@@ -258,6 +278,7 @@ const VAEPage = () => {
           </div>
         )}
 
+        {/* ── Onglet : Avantages ── */}
         {activeTab === 'benefits' && (
           <div className="space-y-8">
             <div className="bg-white rounded-2xl shadow-lg p-8">
@@ -283,8 +304,8 @@ const VAEPage = () => {
           </div>
         )}
 
+        {/* ── Onglet : Accompagnement ── */}
         {activeTab === 'support' && (
-          
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <div className="flex items-center mb-8">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-full mr-4">
@@ -299,9 +320,7 @@ const VAEPage = () => {
                   <div className="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center mr-4">
                     {service.icon}
                   </div>
-                  <div>
-                    <p className="text-gray-800 font-medium">{service.service}</p>
-                  </div>
+                  <p className="text-gray-800 font-medium self-center">{service.service}</p>
                 </div> 
               ))}
             </div>
@@ -319,9 +338,9 @@ const VAEPage = () => {
           </div>
         )}
 
+        {/* ── Onglet : Éligibilité ── */}
         {activeTab === 'eligibility' && (
           <div className="space-y-8">
-            {/* Who */}
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <div className="flex items-center mb-6">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-green-100 text-green-600 rounded-full mr-4">
@@ -331,13 +350,12 @@ const VAEPage = () => {
               </div>
               <div className="bg-green-50 border-l-4 border-green-400 p-6 rounded-r-lg">
                 <p className="text-green-800 text-lg leading-relaxed">
-                  <strong>Toute personne</strong>, ayant <strong>1 an d'activité</strong> en relation directe avec le contenu du diplôme visé 
-                  <strong> sans condition d'âge, de nationalité, de statut, de diplôme</strong>, peut entamer une démarche VAE.
+                  <strong>Toute personne</strong>, ayant <strong>1 an d'activité</strong> en relation directe avec le contenu du diplôme visé{' '}
+                  <strong>sans condition d'âge, de nationalité, de statut, de diplôme</strong>, peut entamer une démarche VAE.
                 </p>
               </div>
             </div>
 
-            {/* What Experience */}
             <div className="bg-white rounded-2xl shadow-lg p-8">
               <div className="flex items-center mb-6">
                 <div className="inline-flex items-center justify-center w-12 h-12 bg-orange-100 text-orange-600 rounded-full mr-4">
@@ -352,7 +370,7 @@ const VAEPage = () => {
               
               <div className="space-y-4">
                 <div className="flex items-start p-4 bg-orange-50 rounded-lg">
-                  <CheckCircle className="w-6 h-6 text-orange-500 mr-3 mt-0.5" />
+                  <CheckCircle className="w-6 h-6 text-orange-500 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Activités salariées et non salariées</h3>
                     <p className="text-gray-600">Libérales, artisanales, commerciales, agricoles...</p>
@@ -360,7 +378,7 @@ const VAEPage = () => {
                 </div>
                 
                 <div className="flex items-start p-4 bg-orange-50 rounded-lg">
-                  <CheckCircle className="w-6 h-6 text-orange-500 mr-3 mt-0.5" />
+                  <CheckCircle className="w-6 h-6 text-orange-500 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Activités extraprofessionnelles</h3>
                     <p className="text-gray-600">Bénévoles, personnelles, électives...</p>
@@ -368,7 +386,7 @@ const VAEPage = () => {
                 </div>
                 
                 <div className="flex items-start p-4 bg-orange-50 rounded-lg">
-                  <CheckCircle className="w-6 h-6 text-orange-500 mr-3 mt-0.5" />
+                  <CheckCircle className="w-6 h-6 text-orange-500 mr-3 mt-0.5 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Périodes de formation</h3>
                     <p className="text-gray-600">Formation initiale ou continue en milieu professionnel (continues ou non)</p>
@@ -402,10 +420,22 @@ const VAEPage = () => {
               Nos conseillers vous accompagnent dans votre démarche VAE.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-purple-600 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+
+              {/* ✅ Bouton "Prendre rendez-vous" — opérationnel */}
+              <button
+                onClick={handleRendezVous}
+                className="inline-flex items-center justify-center bg-white text-purple-600 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg gap-2"
+              >
+                <CalendarDays className="w-5 h-5" />
                 Prendre rendez-vous
               </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-purple-600 transition-all duration-300 transform hover:scale-105">
+
+              {/* ✅ Bouton "Télécharger le guide VAE" — opérationnel */}
+              <button
+                onClick={handleTelechargerGuide}
+                className="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-purple-600 transition-all duration-300 transform hover:scale-105 gap-2"
+              >
+                <Download className="w-5 h-5" />
                 Télécharger le guide VAE
               </button>
             </div>

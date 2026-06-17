@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+    
+    <!-- ============================================================ -->
+    <!-- PAGES PRINCIPALES - PRIORITÉ MAXIMALE                         -->
+    <!-- ============================================================ -->
+    
+    <!-- Accueil -->
+    <url>
+        <loc>https://ifdce.ma/</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://ifdce.ma/" />
+        <xhtml:link rel="alternate" hreflang="ar" href="https://ifdce.ma/ar" />
+        <image:image>
+            <image:loc>https://ifdce.ma/assets/logofdce.png</image:loc>
+            <image:caption>IFDCE - Institut de Formation et Développement des Compétences</image:caption>
+        </image:image>
+    </url>
+
+    <!-- ============================================================ -->
+    <!-- PAGES VAE - PRIORITÉ MAXIMALE (OBJECTIF STRATÉGIQUE)         -->
+    <!-- ============================================================ -->
+    
+    <!-- Page principale VAE -->
+    <url>
+        <loc>https://ifdce.ma/validation-acquis-experience</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://ifdce.ma/validation-acquis-experience" />
+        <xhtml:link rel="alternate" hreflang="ar" href="https://ifdce.ma/ar/validation-acquis-experience" />
+        <image:image>
+            <image:loc>https://ifdce.ma/assets/vae-og-image.jpg</image:loc>
+            <image:caption>VAE Maroc - Validation des Acquis de l'Expérience</image:caption>
+        </image:image>
+    </url>
+
+    <!-- VAE Maroc (alias) -->
+    <url>
+        <loc>https://ifdce.ma/vae-maroc</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- VAE (alias) -->
+    <url>
+        <loc>https://ifdce.ma/vae</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Obtenir diplôme par l'expérience (alias) -->
+    <url>
+        <loc>https://ifdce.ma/obtenir-diplome-par-experience</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Reconnaissance compétences professionnelles (alias) -->
+    <url>
+        <loc>https://ifdce.ma/reconnaissance-competences-professionnelles</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Demande VAE -->
+    <url>
+        <loc>https://ifdce.ma/vae/demande</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- ============================================================ -->
+    <!-- PAGES FORMATIONS                                              -->
+    <!-- ============================================================ -->
+    
+    <!-- Toutes les formations -->
+    <url>
+        <loc>https://ifdce.ma/formations</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Licences Professionnelles -->
+    <url>
+        <loc>https://ifdce.ma/LicenceProfessionnelle</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Masters Professionnels -->
+    <url>
+        <loc>https://ifdce.ma/MasterProfessionnel</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Technicien -->
+    <url>
+        <loc>https://ifdce.ma/Technicien</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Technicien Supérieur -->
+    <url>
+        <loc>https://ifdce.ma/TechnicienSuperieur</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Technicien Aide Comptable -->
+    <url>
+        <loc>https://ifdce.ma/techaidecomptable</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- ============================================================ -->
+    <!-- PAGES GÉNÉRALES                                               -->
+    <!-- ============================================================ -->
+    
+    <!-- À propos -->
+    <url>
+        <loc>https://ifdce.ma/about</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Contact -->
+    <url>
+        <loc>https://ifdce.ma/contact</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Authentification / Inscription -->
+    <url>
+        <loc>https://ifdce.ma/authentification</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Login -->
+    <url>
+        <loc>https://ifdce.ma/login</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Profil utilisateur -->
+    <url>
+        <loc>https://ifdce.ma/profile</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+    <!-- ============================================================ -->
+    <!-- FORMATIONS SPÉCIFIQUES (DÉTAIL)                               -->
+    <!-- ============================================================ -->
+    
+    <!-- Licence Géomatique -->
+    <url>
+        <loc>https://ifdce.ma/formations/licence-geomatique</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Licence Génie Civil -->
+    <url>
+        <loc>https://ifdce.ma/formations/licence-genie-civil</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Master Géomatique -->
+    <url>
+        <loc>https://ifdce.ma/formations/master-geomatique</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Master Génie Civil -->
+    <url>
+        <loc>https://ifdce.ma/formations/master-genie-civil</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- ============================================================ -->
+    <!-- PAGES ADMIN (BLOQUÉES - NON INDEXÉES)                        -->
+    <!-- ============================================================ -->
+    <!-- Note: Ces pages sont bloquées via robots.txt                  -->
+    <!-- mais incluses ici pour référence                              -->
+    
+    <url>
+        <loc>https://ifdce.ma/admin-dashboard</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>never</changefreq>
+        <priority>0.0</priority>
+    </url>
+    <url>
+        <loc>https://ifdce.ma/diploma-dashboard</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>never</changefreq>
+        <priority>0.0</priority>
+    </url>
+    <url>
+        <loc>https://ifdce.ma/field-dashboard</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>never</changefreq>
+        <priority>0.0</priority>
+    </url>
+    <url>
+        <loc>https://ifdce.ma/create-diploma</loc>
+        <lastmod>2024-06-17</lastmod>
+        <changefreq>never</changefreq>
+        <priority>0.0</priority>
+    </url>
+</urlset>

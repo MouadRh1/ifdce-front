@@ -1,139 +1,95 @@
-// Create: src/config/api.js
+// src/config/api.js
 import axios from 'axios';
 
-// API Base URL configuration
-const getApiBaseUrl = () => {
-  // Development - vérifier correctement l'environnement
-  if (window.location.hostname === 'localhost' || 
-      window.location.hostname === '127.0.0.1' ||
-      window.location.port === '5173' ||
-      window.location.port === '5174' ||
-      window.location.port === '5175') {
-    return 'https://linen-sheep-933989.hostingersite.com/api';
-  }
-  // Production
-  return 'https://linen-sheep-933989.hostingersite.com/api';
-};
+const API_BASE_URL = 'https://linen-sheep-933989.hostingersite.com/api';
 
 const api = axios.create({
-  baseURL: getApiBaseUrl(),
-  timeout: 30000, // Augmenter le timeout à 30 secondes
+  baseURL: API_BASE_URL,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
   },
-  withCredentials: false, // Mettre à false si vous n'utilisez pas les cookies
+  withCredentials: false,
 });
 
-// Intercepteur pour ajouter le token à chaque requête
+// Intercepteur requête : ajout du token
 api.interceptors.request.use(
   (config) => {
-    // Essayer plusieurs clés possibles pour le token
-    const token = localStorage.getItem('auth_token') || 
-                  localStorage.getItem('token') || 
-                  sessionStorage.getItem('token');
-    
+    // Chercher le token avec les deux clés possibles
+    const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-      console.log(`[API Request] ${config.method?.toUpperCase()} ${config.url} - Token présent: Oui`);
+      console.log('[API] Token trouvé pour', config.url);
     } else {
-      console.warn(`[API Request] ${config.method?.toUpperCase()} ${config.url} - Token présent: Non`);
+      console.warn('[API] Pas de token pour', config.url);
     }
-    
     return config;
   },
-  (error) => {
-    console.error('[API Request Error]', error);
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Intercepteur pour gérer les réponses
+// Intercepteur réponse : gestion des erreurs
 api.interceptors.response.use(
-  (response) => {
-    // Log des réponses réussies (optionnel, désactiver en production)
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`[API Response] ${response.config.url} - Status: ${response.status}`);
-    }
-    return response;
-  },
+  (response) => response,
   (error) => {
-    // Gestion des erreurs
     if (error.code === 'ECONNABORTED') {
-      console.error('[API Error] Timeout - La requête a pris trop de temps');
-      error.message = 'Le serveur ne répond pas. Veuillez réessayer.';
+      error.userMessage = 'Le serveur ne répond pas. Veuillez réessayer.';
     } else if (error.response) {
-      // Le serveur a répondu avec un code d'erreur
-      console.error(`[API Error] ${error.response.status} - ${error.response.config?.url}`, error.response.data);
-      
-      // Gestion spéciale pour 401 Unauthorized
-      if (error.response.status === 401) {
-        console.warn('[API Error] Non authentifié - Redirection vers login');
-        // Nettoyer les tokens
+      const status = error.response.status;
+
+      if (status === 401) {
+        console.warn('[API] 401 Unauthorized - Déconnexion');
+        // Nettoyer les deux clés
         localStorage.removeItem('auth_token');
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        sessionStorage.removeItem('token');
+        delete api.defaults.headers.common['Authorization'];
         
-        // Éviter les redirections multiples
+        // Rediriger vers login si pas déjà sur login
         if (!window.location.pathname.includes('/login')) {
           window.location.href = '/login';
         }
       }
-      
-      // Personnaliser le message d'erreur
-      if (error.response.data?.message) {
-        error.userMessage = error.response.data.message;
-      } else if (error.response.data?.error) {
-        error.userMessage = error.response.data.error;
-      } else {
-        error.userMessage = `Erreur ${error.response.status}: ${error.response.statusText}`;
-      }
+
+      error.userMessage =
+        error.response.data?.message ||
+        error.response.data?.error ||
+        `Erreur ${status}: ${error.response.statusText}`;
+
     } else if (error.request) {
-      // La requête a été faite mais pas de réponse
-      console.error('[API Error] Pas de réponse du serveur', error.request);
       error.userMessage = 'Impossible de contacter le serveur. Vérifiez votre connexion.';
     } else {
-      // Erreur lors de la configuration de la requête
-      console.error('[API Error] Erreur de configuration', error.message);
       error.userMessage = 'Une erreur est survenue. Veuillez réessayer.';
     }
-    
+
     return Promise.reject(error);
   }
 );
 
-// Fonction utilitaire pour vérifier l'authentification
-export const isAuthenticated = () => {
-  const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
-  return !!token;
-};
+// Fonctions utilitaires unifiées
+export const getToken = () => localStorage.getItem('auth_token') || localStorage.getItem('token');
 
-// Fonction utilitaire pour obtenir le token
-export const getToken = () => {
-  return localStorage.getItem('auth_token') || localStorage.getItem('token');
-};
-
-// Fonction utilitaire pour définir le token
 export const setToken = (token) => {
   if (token) {
     localStorage.setItem('auth_token', token);
-    localStorage.setItem('token', token);
+    localStorage.setItem('token', token); // Stocker dans les deux clés pour compatibilité
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    console.log('[API] Token stocké');
   }
 };
 
-// Fonction utilitaire pour supprimer le token
 export const removeToken = () => {
   localStorage.removeItem('auth_token');
   localStorage.removeItem('token');
   localStorage.removeItem('user');
-  sessionStorage.removeItem('token');
   delete api.defaults.headers.common['Authorization'];
+  console.log('[API] Token supprimé');
 };
 
-// Fonction utilitaire pour obtenir les en-têtes d'authentification
+export const isAuthenticated = () => !!getToken();
+
 export const getAuthHeaders = () => {
   const token = getToken();
   return token ? { Authorization: `Bearer ${token}` } : {};

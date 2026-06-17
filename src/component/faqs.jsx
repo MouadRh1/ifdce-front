@@ -1,3 +1,4 @@
+// src/component/faqs.jsx
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -16,7 +17,7 @@ export default function Faqs() {
         },
         {
             q: "Pour qui ?",
-            a: "Vous êtes salarié, demandeur d'emploi, entrepreneur, ou sans diplôme ? IFDCE s'adresse à vous. Notre accompagnement s'adapte à votre emploi du temps, vos besoins, vos ambitions. #AccessibleÀTous #VAEPourTous"
+            a: "Vous êtes salarié, demandeur d'emploi, entrepreneur, ou sans diplôme ? IFDCE s'adresse à vous. Notre accompagnement s'adapte à votre emploi du temps, vos besoins, vos ambitions."
         },
         {
             q: "Formation ou VAE ?",
@@ -29,7 +30,11 @@ export default function Faqs() {
         {
             q: "Vous avez quitté les études trop tôt ?",
             a: "Vous travaillez depuis des années sans diplôme officiel ? Avec IFDCE, vous pouvez reprendre le contrôle. ✔ Étude gratuite de votre dossier ✔ Accompagnement sur mesure"
-        },        
+        },
+        {
+            q: "Quelles sont les formations prioritaires à l'IFDCE ?",
+            a: "L'IFDCE propose actuellement 4 formations prioritaires : la Licence Professionnelle en Géomatique et Ingénierie Topographique, la Licence Professionnelle en Génie Civil et Ingénierie Topographique, le Master Professionnel en Géomatique et Ingénierie Topographique, et le Master Professionnel en Génie Civil et Ingénierie Topographique. Ces formations sont proposées en mode hybride (présentiel et distanciel) et sont reconnues par l'État."
+        }
     ];
 
     const toggleFAQ = (index) => {
@@ -83,9 +88,9 @@ export default function Faqs() {
 
                 <div className="text-center mt-12">
                     <Link to="/contact">
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200">
-                        Nous contacter pour plus d'informations
-                    </button>
+                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200">
+                            Nous contacter pour plus d'informations
+                        </button>
                     </Link>
                 </div>
             </div>
