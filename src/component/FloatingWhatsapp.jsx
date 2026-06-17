@@ -14,9 +14,7 @@ export default function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contactez-nous sur WhatsApp"
-      className={`fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl ${
-        isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
-      }`}
+      className={`fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl `}
       style={{
         boxShadow: "0 4px 20px rgba(37, 211, 102, 0.4)",
         backgroundColor: "#25D366",
