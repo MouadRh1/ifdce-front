@@ -1,6 +1,6 @@
 // src/components/admin/ContactsTab.jsx
 import React, { useState } from 'react';
-import { getStatusColor, getStatusLabel, getTypeLabel } from './adminHelpers';
+import { getStatusColor, getStatusLabel, getTypeLabel } from './AdminHelpers';
 
 export default function ContactsTab({ contacts, contactStats, onSearch, onStatusChange, onDelete }) {
     const [searchTerm, setSearchTerm] = useState('');
