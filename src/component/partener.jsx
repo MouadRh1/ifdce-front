@@ -2,7 +2,7 @@
 import React from 'react'; 
 import logodeisgn from '../assets/logodesign.png';
 import logomicrosoft from '../assets/logomicrosoft.png';
-import imagesesgt from '../assets/imagesesgt.png';
+// import imagesesgt from '../assets/imagesesgt.png';
 import imagesESEJE from '../assets/imagesESEJE.png';
 import logoiisga from '../assets/logoiisga.png'; 
 import logoIPFOPS from '../assets/logoIPFOPS.png';
@@ -16,7 +16,7 @@ import logoWekerle from '../assets/wekerlyLogo.png';
 export default function Partener() {
   const partenaires = [
     // Partenaires existants
-    { id: 1, logo: imagesesgt, nom: 'SESGT' },
+    // { id: 1, logo: imagesesgt, nom: 'SESGT' },
     { id: 2, logo: imagesESEJE, nom: 'ESEJE' },
     { id: 3, logo: logoiisga, nom: 'IISGA' },
     { id: 4, logo: logoIPFOPS, nom: 'IPFOPS' },
