@@ -69,7 +69,7 @@ export default function ImageSlider() {
         <p className={`text-2xl text-slate-200 mb-12 font-light max-w-4xl mx-auto leading-relaxed transform transition-all duration-1000 delay-500 hero-subtitle ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
         }`}>
-          Rejoignez l'excellence académique et transformez votre parcours professionnel en qualification reconnue.
+          Rejoignez l'excellence académique et transformez votre parcours professionnel en qualification.
           <span className="text-blue-300 font-medium"> L'IFDCE vous accompagne vers la réussite.</span>
         </p>
 

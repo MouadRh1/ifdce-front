@@ -33,7 +33,7 @@ export default function Faqs() {
         },
         {
             q: "Quelles sont les formations prioritaires à l'IFDCE ?",
-            a: "L'IFDCE propose actuellement 4 formations prioritaires : la Licence Professionnelle en Géomatique et Ingénierie Topographique, la Licence Professionnelle en Génie Civil et Ingénierie Topographique, le Master Professionnel en Géomatique et Ingénierie Topographique, et le Master Professionnel en Génie Civil et Ingénierie Topographique. Ces formations sont proposées en mode hybride (présentiel et distanciel) et sont reconnues par l'État."
+            a: "L'IFDCE propose actuellement 4 formations prioritaires : la Licence Professionnelle en Géomatique et Ingénierie Topographique, la Licence Professionnelle en Génie Civil et Ingénierie Topographique, le Master Professionnel en Géomatique et Ingénierie Topographique, et le Master Professionnel en Génie Civil et Ingénierie Topographique. Ces formations sont proposées en mode hybride (présentiel et distanciel) ."
         }
     ];
 
