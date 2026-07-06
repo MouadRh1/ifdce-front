@@ -36,7 +36,6 @@ export default function VAESection() {
             
             <div className="space-y-3 mb-8">
               {[
-                "Diplôme reconnu par l'État",
                 "Accompagnement personnalisé à chaque étape",
                 "Processus rapide et efficace",
                 "7 diplômes accessibles : du Technicien au Doctorat",

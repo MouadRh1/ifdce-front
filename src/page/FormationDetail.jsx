@@ -285,10 +285,6 @@ export default function FormationDetail() {
                 S'inscrire
               </button>
             </Link>
-            <div className="flex items-center gap-2 bg-yellow-400/15 border border-yellow-400/25 text-yellow-300 text-xs font-semibold px-3 py-2 rounded-lg">
-              <Award size={13} />
-              Diplôme reconnu par l'État
-            </div>
           </div>
         </div>
       </div>

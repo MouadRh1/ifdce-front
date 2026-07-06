@@ -21,7 +21,7 @@ export default function Presentation2() {
                     <p className="text-gray-600 leading-relaxed text-lg mb-6">
                         {/* MODIFICATION: Mention du mode hybride (présentiel et distanciel) */}
                         Travail, famille, distance... L'IFDCE vous propose des formations en mode hybride 
-                        alliant présentiel et distanciel. Des diplômes reconnus, des cours flexibles et un 
+                        alliant présentiel et distanciel. Des diplômes, des cours flexibles et un 
                         accompagnement humain pour réussir à votre rythme.
                     </p>
                     
@@ -32,7 +32,7 @@ export default function Presentation2() {
                         </div>
                         <div className="flex items-center text-gray-700">
                             <div className="w-2 h-2 bg-indigo-600 rounded-full mr-3"></div>
-                            <span>Diplômes reconnus</span>
+                            <span>Diplômes</span>
                         </div>
                         <div className="flex items-center text-gray-700">
                             <div className="w-2 h-2 bg-indigo-600 rounded-full mr-3"></div>

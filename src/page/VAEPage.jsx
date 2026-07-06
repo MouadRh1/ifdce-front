@@ -144,7 +144,7 @@ const VAEPage = () => {
               </h1>
               
               <p className="text-xl text-purple-100 mb-8 leading-relaxed">
-                Transformez votre expérience professionnelle en diplôme reconnu. 
+                Transformez votre expérience professionnelle en diplôme. 
                 Obtenez une certification officielle grâce à vos compétences acquises sur le terrain.
               </p>
               
@@ -416,7 +416,7 @@ const VAEPage = () => {
               Prêt à valoriser votre expérience ?
             </h2>
             <p className="text-xl text-purple-100 mb-8">
-              Transformez vos années d'expérience en diplôme reconnu. 
+              Transformez vos années d'expérience en diplôme. 
               Nos conseillers vous accompagnent dans votre démarche VAE.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

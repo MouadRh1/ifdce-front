@@ -50,7 +50,7 @@ export default function VAE() {
             Validation des Acquis de l'Expérience (VAE)
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Transformez votre expérience professionnelle en diplôme reconnu
+            Transformez votre expérience professionnelle en diplôme
           </p>
         </div>
 
@@ -102,7 +102,6 @@ export default function VAE() {
           <div className="text-center p-6">
             <div className="text-4xl mb-4">🎯</div>
             <h3 className="font-bold mb-2">Reconnaissance officielle</h3>
-            <p className="text-gray-600">Diplôme reconnu par l'État et par les entreprises</p>
           </div>
           <div className="text-center p-6">
             <div className="text-4xl mb-4">⏱️</div>

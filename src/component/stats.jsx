@@ -29,7 +29,7 @@ export default function Stats() {
                         Et si votre expérience valait un diplôme ?
                     </h3>
                     <p className="mt-3 text-lg">
-                        Chez IFDC, vous pouvez obtenir une licence ou un master reconnu grâce à la Validation des Acquis de l'Expérience. 
+                        Chez IFDC, vous pouvez obtenir une licence ou un master grâce à la Validation des Acquis de l'Expérience. 
                         Votre parcours professionnel devient votre plus grande force.
                     </p>
                     <Link to="Contact" className="inline-block">

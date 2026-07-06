@@ -25,7 +25,7 @@ export default function Faqs() {
         },
         {
             q: "Quelles sont les étapes de la VAE ?",
-            a: "Étude gratuite de votre dossier - Constitution du livret d'expérience - Soutenance devant un jury - Obtention de votre diplôme français reconnu. Nous sommes à vos côtés à chaque étape."
+            a: "Étude gratuite de votre dossier - Constitution du livret d'expérience - Soutenance devant un jury - Obtention de votre diplôme français. Nous sommes à vos côtés à chaque étape."
         },
         {
             q: "Vous avez quitté les études trop tôt ?",

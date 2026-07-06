@@ -418,7 +418,7 @@ const MasterProfessionnel = () => {
                             {
                                 icon: <Building2 className="w-8 h-8" />,
                                 title: "Réseau Professionnel",
-                                description: "Accès à un réseau d'alumni et de professionnels reconnus",
+                                description: "Accès à un réseau d'alumni et de professionnels",
                                 color: "blue"
                             }
                         ].map((feature, index) => (

@@ -75,7 +75,7 @@ export default function FeaturedFormations() {
             Nos formations professionnelles
           </h2>
           <p className="text-slate-500 text-base max-w-lg mx-auto leading-relaxed">
-            En mode hybride (présentiel &amp; distanciel) — Diplômes reconnus par l'État
+            En mode hybride (présentiel &amp; distanciel)
           </p>
         </div>
 

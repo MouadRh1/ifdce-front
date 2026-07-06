@@ -187,8 +187,7 @@ export default function VAERequest() {
           </span>
           <h1 className="text-2xl font-bold mb-2">Demandez votre VAE</h1>
           <p className="text-blue-100 text-sm leading-relaxed">
-            Faites reconnaître officiellement votre expérience professionnelle et obtenez un diplôme national
-            reconnu par l'État. Un conseiller dédié vous accompagne à chaque étape.
+            Faites reconnaître officiellement votre expérience professionnelle et obtenez un diplôme national. Un conseiller dédié vous accompagne à chaque étape.
           </p>
         </div>
 

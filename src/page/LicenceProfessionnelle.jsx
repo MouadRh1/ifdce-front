@@ -298,8 +298,8 @@ const LicenceProfessionnelle = () => {
             {[
               {
                 icon: <GraduationCap className="w-8 h-8" />,
-                title: "Diplôme reconnu",
-                description: "Diplôme de niveau BAC+3 reconnu par l'État",
+                title: "Diplôme prive",
+                description: "Diplôme de niveau BAC+3",
                 color: "blue"
               },
               {
