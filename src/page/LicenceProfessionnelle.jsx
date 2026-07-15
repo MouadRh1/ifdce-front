@@ -9,6 +9,7 @@ const LicenceProfessionnelle = () => {
     {
       id: 1,
       title: "Licence Professionnelle en Géomatique et Ingénierie Topographique",
+      slug: "licence-geomatique", // ✅ Slug ajouté
       description: "Formez-vous aux métiers de la géomatique et de l'ingénierie topographique. Maîtrisez les technologies géospatiales, les systèmes d'information géographique (SIG) et les techniques de topographie de précision pour intervenir dans les secteurs de l'aménagement du territoire, de l'urbanisme et des travaux publics.",
       icon: <Globe className="w-8 h-8" />,
       color: "from-cyan-500 to-blue-600",
@@ -23,6 +24,7 @@ const LicenceProfessionnelle = () => {
     {
       id: 2,
       title: "Licence Professionnelle en Génie Civil et Ingénierie Topographique",
+      slug: "licence-genie-civil", // ✅ Slug ajouté
       description: "Acquérez les compétences nécessaires pour concevoir, gérer et réaliser des projets d'infrastructure et de construction. Cette formation combine les fondamentaux du génie civil avec les techniques topographiques avancées pour former des professionnels polyvalents dans le secteur du BTP.",
       icon: <HardHat className="w-8 h-8" />,
       color: "from-orange-500 to-red-600",
@@ -38,6 +40,7 @@ const LicenceProfessionnelle = () => {
     {
       id: 3,
       title: "Licence Professionnelle Administration de Base de Donnée & Technologies WEB",
+      slug: "licence-bdd-web", // ✅ Slug ajouté
       description: "L'objectif de cette licence professionnelle est la formation de développeurs spécialistes des nouvelles technologies de construction d'applications mobiles...",
       icon: <Database className="w-8 h-8" />,
       color: "from-blue-500 to-blue-600",
@@ -49,6 +52,7 @@ const LicenceProfessionnelle = () => {
     {
       id: 4,
       title: "Licence Professionnelle Comptabilité, Finance, Audit",
+      slug: "licence-comptabilite", // ✅ Slug ajouté
       description: "Cette formation a pour objectifs de former des compétences capables de participer au Management des Organisations dans les domaines comptables et financiers et de maîtriser les Techniques du contrôle, de la Finance et d'Audit...",
       icon: <Calculator className="w-8 h-8" />,
       color: "from-green-500 to-green-600",
@@ -60,6 +64,7 @@ const LicenceProfessionnelle = () => {
     {
       id: 5,
       title: "LICENCE PROFESSIONNELLE GESTION DES ENTREPRISES",
+      slug: "licence-gestion", // ✅ Slug ajouté
       description: "La licence Gestion des entreprises est une formation à la fois délibérément généraliste et résolument tournée vers le monde professionnel...",
       icon: <Briefcase className="w-8 h-8" />,
       color: "from-purple-500 to-purple-600",
@@ -71,6 +76,7 @@ const LicenceProfessionnelle = () => {
     {
       id: 6,
       title: "LICENCE PROFESSIONNELLE MÉTIERS DU NOTARIAT",
+      slug: "licence-notariat", // ✅ Slug ajouté
       description: "Pendant la licence professionnelle en entrepreneuriat, les étudiants sont formés à la création et à la gestion d'une entreprise, et d'un produit. Ainsi qu'à la gestion des problématiques rencontrées lors du management des projets.",
       icon: <FileText className="w-8 h-8" />,
       color: "from-indigo-500 to-indigo-600",
@@ -82,6 +88,7 @@ const LicenceProfessionnelle = () => {
     {
       id: 7,
       title: "Licence Professionnelle Génie Civil",
+      slug: "licence-genie-civil-base", // ✅ Slug ajouté
       description: "Cette formation permettra aux étudiants d'acquérir les compétences suivantes : Connaissance des différents types de matériaux de construction. Acquisition des techniques principales utilisées dans la construction.",
       icon: <Building className="w-8 h-8" />,
       color: "from-amber-500 to-amber-600",
@@ -270,7 +277,7 @@ const LicenceProfessionnelle = () => {
                 
                 {/* Action Buttons */}
                 <div className="flex space-x-3">
-                  <Link to={`/formations/${program.id}`} className="flex-1">
+                  <Link to={`/licence/${program.slug}`} className="flex-1">
                     <button className={`w-full bg-gradient-to-r ${program.color} text-white py-3 px-4 rounded-xl text-sm font-semibold hover:opacity-90 transition-all duration-200 transform hover:scale-105 shadow-md`}>
                       En savoir plus
                     </button>

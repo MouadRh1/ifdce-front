@@ -22,6 +22,9 @@ import MasterProfessionnel from "../page/MasterProfessionnel.jsx"; // Add this i
 import Profile from "../page/Profile.jsx"; // Add this import
 import VAERequest from "../page/VAERequest.jsx";
 import AllFormations from "../page/AllFormations.jsx";
+import TechnicienDetails from "../page/TechnicienDetails";
+import LicenceDetails from "../page/LicenceDetails";
+import MasterDetails from "../page/MasterDetails";
 
 export const router = createBrowserRouter([
   {
@@ -53,7 +56,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/formations/:slug",
-        element: <FormationDetail/>,
+        element: <FormationDetail />,
+      },
+      {
+        path: "/technicien/:slug",
+        element: <TechnicienDetails />,
+      },
+      {
+        path: "/licence/:slug",
+        element: <LicenceDetails />,
+      },
+      {
+        path: "/master/:slug",
+        element: <MasterDetails />,
       },
       {
         path: "/techaidecomptable",
@@ -98,11 +113,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/formations",
-        element: <AllFormations/> ,
+        element: <AllFormations />,
       },
       {
         path: "/inscription-vae",
-        element: <VAERequest/>,
+        element: <VAERequest />,
       },
       {
         path: "/contact",

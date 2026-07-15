@@ -17,9 +17,9 @@ export default function Partener() {
   const partenaires = [
     // Partenaires existants
     // { id: 1, logo: imagesesgt, nom: 'SESGT' },
-    { id: 2, logo: imagesESEJE, nom: 'ESEJE' },
-    { id: 3, logo: logoiisga, nom: 'IISGA' },
-    { id: 4, logo: logoIPFOPS, nom: 'IPFOPS' },
+    // { id: 2, logo: imagesESEJE, nom: 'ESEJE' },
+    // { id: 3, logo: logoiisga, nom: 'IISGA' },
+    // { id: 4, logo: logoIPFOPS, nom: 'IPFOPS' },
     // NOUVEAUX PARTENAIRES
     { id: 7, logo: logoEISETP, nom: 'EIESTP' },
     { id: 8, logo: logoFIEP, nom: 'FIEP' },

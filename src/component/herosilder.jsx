@@ -51,7 +51,7 @@ export default function ImageSlider() {
         }`}>
           <Award className="w-5 h-5 text-blue-400" />
           <span className="text-white font-medium">
-            Institut de Formation et Développement des Compétences
+            l’institut, de formation de développement des compétences et d’excellence 
           </span>
         </div>
 

@@ -74,7 +74,7 @@ export default function Contact() {
         address: "Immeuble N° 22, Rue Jbel Moussa, Agdal, Rabat, Maroc",
         phones: [
             { number: "+212 665 654 031", label: "Standard" },
-            { number: "+212 6XX XXX XXX", label: "WhatsApp" }
+            { number: "+212 669 613 040", label: "WhatsApp" }
         ],
         email: "contact@ifdce.com",
         hours: "Lundi - Vendredi: 8h00 - 17h00",
@@ -388,7 +388,7 @@ export default function Contact() {
                     <div className="bg-white rounded-lg shadow-md overflow-hidden">
                         <div className="w-full h-96">
                             <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3178.714402618682!2d-6.848885346918367!3d33.9943205392242!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda76c905acc4b17%3A0xc15b5e4b1a0705a!2sN%C2%B0%2022%20Rue%20Jbel%20Moussa%2C%20Rabat%2010000!5e1!3m2!1sfr!2sma!4v1749080156845!5m2!1sfr!2sma" 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.357267039044!2d-6.907973325590714!3d33.93193812407532!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda713c7816d6f15%3A0xf8c772a4a0734a4d!2sWorkaura!5e0!3m2!1sfr!2sma!4v1783686763970!5m2!1sfr!2sma"
                                 width="100%" 
                                 height="450"  
                                 allowFullScreen 
@@ -397,6 +397,7 @@ export default function Contact() {
                                 title="Localisation IFDCE"
                                 className="w-full h-full"
                             />
+                            
                         </div>
                     </div>
                 </div>

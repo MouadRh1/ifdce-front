@@ -6,7 +6,7 @@ export default function Cards() {
     const posts = [
         {
             title: "Activités principales",
-            desc: "Formations diplômantes : technicien et TS, Licences et Masters professionnels Formation hybride (présentiel et distanciel) - Validation des acquis de l'expérience : accompagnement personnalisé - Formations certifiantes dans divers domaines : droit, économie, management, informatique, infographie, etc. - Conseil en ingénierie de formation et accompagnement des entreprises",
+            desc: "Formations diplômantes : technicien et TS, Licences et Masters professionnels Formation hybride - Validation des acquis de l'expérience : accompagnement personnalisé - Formations certifiantes dans divers domaines : droit, économie, management, informatique, infographie, etc. - Conseil en ingénierie de formation et accompagnement des entreprises",
             img: "https://images.unsplash.com/photo-1556155092-490a1ba16284?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
             link: "/formations",
             note: "MBA:"

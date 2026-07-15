@@ -35,12 +35,12 @@ export default function Bloc() {
                 </div>
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button  
-                        onClick={handleDiscoverClick}
+                    <Link 
+                        to="/formations" 
                         className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
                     >
                         Découvrir nos formations
-                    </button>
+                    </Link>
                     <Link 
                         to="/formations" 
                         className="border-2 border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300"

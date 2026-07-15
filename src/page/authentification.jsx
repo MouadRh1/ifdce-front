@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PhoneInput from '../component/PhoneInput';
-import api from '../config/api'; // Add this import
+import api from '../config/api';
 
 export default function Authentification() {
   const navigate = useNavigate();
@@ -14,32 +14,20 @@ export default function Authentification() {
     email: '',
     password: '',
     password_confirmation: '',
+    customField: '', // Nouveau champ pour le field personnalisé
   });
   const [diplomas, setDiplomas] = useState([]);
   const [selectedDiploma, setSelectedDiploma] = useState(null);
   const [availableFields, setAvailableFields] = useState([]);
   const [selectedFields, setSelectedFields] = useState([]);
+  const [customField, setCustomField] = useState(''); // Field personnalisé
+  const [showCustomFieldInput, setShowCustomFieldInput] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const totalSteps = 4;
-  const handlePhoneChange = (phoneNumber) => {
-    setFormData(prev => ({
-      ...prev,
-      phoneNumber: phoneNumber
-    }));
-    
-    // Clear phone number error if it exists
-    if (errors.phoneNumber) {
-      setErrors(prev => ({
-        ...prev,
-        phoneNumber: ''
-      }));
-    }
-  };
-
 
   useEffect(() => {
     api.defaults.baseURL = 'https://linen-sheep-933989.hostingersite.com/';
@@ -62,6 +50,9 @@ export default function Authentification() {
     try {
       const response = await api.get(`/api/diplomas/${diplomaId}/fields`);
       setAvailableFields(response.data.filter(field => field.is_active));
+      // Réinitialiser le field personnalisé quand on change de diplôme
+      setCustomField('');
+      setShowCustomFieldInput(false);
     } catch (error) {
       console.error('Error fetching fields:', error);
       setAvailableFields([]);
@@ -74,15 +65,29 @@ export default function Authentification() {
       ...prevData,
       [name]: value,
     }));
-    // Clear field-specific errors when user types
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: null }));
     }
   };
 
+  const handlePhoneChange = (phoneNumber) => {
+    setFormData(prev => ({
+      ...prev,
+      phoneNumber: phoneNumber
+    }));
+    if (errors.phoneNumber) {
+      setErrors(prev => ({
+        ...prev,
+        phoneNumber: ''
+      }));
+    }
+  };
+
   const handleDiplomaSelection = (diploma) => {
     setSelectedDiploma(diploma);
-    setSelectedFields([]); // Reset selected fields
+    setSelectedFields([]);
+    setCustomField('');
+    setShowCustomFieldInput(false);
     fetchFieldsForDiploma(diploma.id);
   };
 
@@ -94,6 +99,29 @@ export default function Authentification() {
         return [...prev, fieldId];
       }
     });
+    // Si on sélectionne un field existant, on cache le champ personnalisé
+    if (showCustomFieldInput) {
+      setShowCustomFieldInput(false);
+      setCustomField('');
+    }
+  };
+
+  const handleCustomFieldChange = (e) => {
+    setCustomField(e.target.value);
+    // Effacer l'erreur si présente
+    if (errors.customField) {
+      setErrors(prev => ({ ...prev, customField: null }));
+    }
+  };
+
+  const toggleCustomFieldInput = () => {
+    setShowCustomFieldInput(!showCustomFieldInput);
+    if (!showCustomFieldInput) {
+      // Désélectionner tous les fields existants
+      setSelectedFields([]);
+    } else {
+      setCustomField('');
+    }
   };
 
   const validateStep = (step) => {
@@ -106,7 +134,6 @@ export default function Authentification() {
         if (!formData.email.trim()) newErrors.email = ['Email is required'];
         else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = ['Email is invalid'];
         
-        // Password validation
         if (!formData.password.trim()) newErrors.password = ['Password is required'];
         else if (formData.password.length < 8) newErrors.password = ['Password must be at least 8 characters'];
         
@@ -121,7 +148,10 @@ export default function Authentification() {
         if (!selectedDiploma) newErrors.diploma = ['Please select a diploma'];
         break;
       case 4:
-        if (selectedFields.length === 0) newErrors.fields = ['Please select at least one field'];
+        // Vérifier si au moins un field est sélectionné OU un field personnalisé est rempli
+        if (selectedFields.length === 0 && !customField.trim()) {
+          newErrors.fields = ['Please select at least one field or enter a custom field'];
+        }
         break;
     }
     
@@ -146,10 +176,27 @@ export default function Authentification() {
     setErrors({});
 
     try {
-      const diplomaFields = selectedFields.map(fieldId => ({
-        diploma_id: selectedDiploma.id,
-        field_id: fieldId
-      }));
+      // Construire la liste des fields (existants + personnalisé)
+      const diplomaFields = [];
+      
+      // Ajouter les fields existants sélectionnés
+      selectedFields.forEach(fieldId => {
+        diplomaFields.push({
+          diploma_id: selectedDiploma.id,
+          field_id: fieldId
+        });
+      });
+
+      // Ajouter le field personnalisé s'il existe
+      if (customField.trim()) {
+        // Option 1: Créer un nouveau field avec le nom personnalisé
+        // Ou Option 2: Envoyer le nom personnalisé comme field_name
+        diplomaFields.push({
+          diploma_id: selectedDiploma.id,
+          field_name: customField.trim(), // Envoyer le nom personnalisé
+          is_custom: true // Indiquer que c'est un field personnalisé
+        });
+      }
 
       const response = await api.post('/api/register', {
         name: `${formData.name} ${formData.familyName}`,
@@ -268,7 +315,6 @@ export default function Authentification() {
         {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email[0]}</p>}
       </div>
 
-      {/* Password Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
@@ -340,7 +386,6 @@ export default function Authentification() {
     </div>
   );
 
-  // Keep the other render methods (renderStep2, renderStep3, renderStep4) the same...
   const renderStep2 = () => (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">Contact Information</h3>
@@ -367,7 +412,7 @@ export default function Authentification() {
         <label htmlFor="phoneNumber" className="block text-gray-700 text-sm font-bold mb-2">
           Phone Number *
         </label>
-               <PhoneInput
+        <PhoneInput
           value={formData.phoneNumber}
           onChange={handlePhoneChange}
         />
@@ -423,8 +468,10 @@ export default function Authentification() {
         </div>
       )}
 
-      {availableFields.length > 0 ? (
+      {/* Fields existants */}
+      {availableFields.length > 0 && (
         <div className="space-y-3">
+          <p className="text-sm font-medium text-gray-700">Available specializations:</p>
           {availableFields.map((field) => (
             <label
               key={field.id}
@@ -452,17 +499,52 @@ export default function Authentification() {
             </label>
           ))}
         </div>
-      ) : (
-        <div className="text-center py-8 text-gray-500">
-          <p>No fields available for this diploma.</p>
-          <p className="text-sm">Please contact administration for more information.</p>
-        </div>
       )}
 
-      {selectedFields.length > 0 && (
+      {/* Option pour ajouter un field personnalisé */}
+      <div className="mt-4 pt-4 border-t border-gray-200">
+        <button
+          type="button"
+          onClick={toggleCustomFieldInput}
+          className={`text-sm font-medium ${
+            showCustomFieldInput ? 'text-red-600 hover:text-red-700' : 'text-blue-600 hover:text-blue-700'
+          }`}
+        >
+          {showCustomFieldInput ? '− Cancel custom field' : '+ Add a custom field not listed'}
+        </button>
+
+        {showCustomFieldInput && (
+          <div className="mt-3">
+            <input
+              type="text"
+              value={customField}
+              onChange={handleCustomFieldChange}
+              placeholder="Enter your specialization field..."
+              className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                errors.customField ? 'border-red-500' : 'border-gray-300'
+              }`}
+            />
+            {errors.customField && (
+              <p className="text-red-500 text-xs mt-1">{errors.customField}</p>
+            )}
+            <p className="text-xs text-gray-500 mt-1">
+              Enter the name of your specialization if it's not listed above.
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* Résumé des sélections */}
+      {(selectedFields.length > 0 || customField.trim()) && (
         <div className="mt-4 p-3 bg-green-50 rounded-lg">
           <p className="text-sm text-green-800">
-            <strong>Selected Fields:</strong> {selectedFields.length}
+            <strong>Selected Fields:</strong> {selectedFields.length + (customField.trim() ? 1 : 0)}
+            {selectedFields.length > 0 && (
+              <span className="ml-1">({selectedFields.length} from list)</span>
+            )}
+            {customField.trim() && (
+              <span className="ml-1">(custom: {customField})</span>
+            )}
           </p>
         </div>
       )}

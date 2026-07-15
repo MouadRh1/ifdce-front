@@ -28,7 +28,7 @@ export default function Presentation2() {
                     <div className="space-y-4">
                         <div className="flex items-center text-gray-700">
                             <div className="w-2 h-2 bg-indigo-600 rounded-full mr-3"></div>
-                            <span>Formation Hybride (présentiel + distanciel)</span>
+                            <span>Formation Hybride</span>
                         </div>
                         <div className="flex items-center text-gray-700">
                             <div className="w-2 h-2 bg-indigo-600 rounded-full mr-3"></div>

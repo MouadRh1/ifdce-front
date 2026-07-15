@@ -1,16 +1,10 @@
+// src/page/Technicien.jsx
 import React from 'react';
-
-import { BookOpen, Building2, Users, PenTool, Monitor , Truck, Hotel } from 'lucide-react';
 import { 
- 
-  Settings, 
-  Wifi, 
-  HardHat, 
-  Zap, 
-  CircuitBoard 
-} from "lucide-react";
-import { href } from 'react-router-dom';
-import { Link, useLocation } from "react-router-dom";
+  BookOpen, Building2, Users, PenTool, Monitor, Truck, Hotel,
+  Settings, Wifi, HardHat, Zap, CircuitBoard 
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Technicien = () => {
   const programs = [
@@ -22,7 +16,8 @@ const Technicien = () => {
       color: "from-blue-500 to-blue-600",
       bgColor: "bg-blue-50",
       textColor: "text-blue-700",
-      image: "https://fiep-education.fr/assets/IMG/technicien/aide%20comptable/3170.jpg"
+      image: "https://fiep-education.fr/assets/IMG/technicien/aide%20comptable/3170.jpg",
+      slug: "technicien-aide-comptable"
     },
     {
       id: 2,
@@ -32,7 +27,8 @@ const Technicien = () => {
       color: "from-orange-500 to-orange-600",
       bgColor: "bg-orange-50",
       textColor: "text-orange-700",
-      image: "https://th.bing.com/th/id/OIP.ZjiScRufl2sIZ3UADhSWRAHaE8?w=235&h=180&c=7&r=0&o=5&pid=1.7"
+      image: "https://th.bing.com/th/id/OIP.ZjiScRufl2sIZ3UADhSWRAHaE8?w=235&h=180&c=7&r=0&o=5&pid=1.7",
+      slug: "chef-chantier-travaux-publics"
     },
     {
       id: 3,
@@ -42,7 +38,8 @@ const Technicien = () => {
       color: "from-green-500 to-green-600",
       bgColor: "bg-green-50",
       textColor: "text-green-700",
-      image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      slug: "technicien-commercial"
     },
     {
       id: 4,
@@ -52,7 +49,8 @@ const Technicien = () => {
       color: "from-purple-500 to-purple-600",
       bgColor: "bg-purple-50",
       textColor: "text-purple-700",
-      image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      slug: "dessinateur-batiment"
     },
     {
       id: 5,
@@ -62,9 +60,10 @@ const Technicien = () => {
       color: "from-indigo-500 to-indigo-600",
       bgColor: "bg-indigo-50",
       textColor: "text-indigo-700",
-      image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      slug: "technicien-informatique"
     },
-      {
+    {
       id: 6,
       title: "Technicien Logistique",
       description: "Le Technicien en Logistique est chargé des opérations de réception, de mise en stock, de préparation des commandes et d'expédition des marchandises...",
@@ -72,7 +71,8 @@ const Technicien = () => {
       color: "from-cyan-500 to-cyan-600",
       bgColor: "bg-cyan-50",
       textColor: "text-cyan-700",
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      slug: "technicien-logistique"
     },
     {
       id: 7,
@@ -82,59 +82,65 @@ const Technicien = () => {
       color: "from-rose-500 to-rose-600",
       bgColor: "bg-rose-50",
       textColor: "text-rose-700",
-      image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+      image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+      slug: "technicien-reception-hotel"
     },
     {
-  id: 8,
-  title: "Technicien en Maintenance Industrielle",
-  description: "Formation complète en maintenance préventive et corrective des équipements industriels. Maîtrise des techniques de diagnostic, réparation et optimisation des machines de production.",
-  icon: <Settings className="w-8 h-8" />,
-  color: "from-green-500 to-green-600",
-  bgColor: "bg-green-50",
-  textColor: "text-green-700",
-  image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=400&h=300&fit=crop"
-},
-{
-  id: 9,
-  title: "Technicien Réseaux et Télécommunications",
-  description: "Spécialisation dans l'installation, la configuration et la maintenance des réseaux informatiques et systèmes de télécommunications. Compétences en sécurité réseau et administration système.",
-  icon: <Wifi className="w-8 h-8" />,
-  color: "from-purple-500 to-purple-600",
-  bgColor: "bg-purple-50",
-  textColor: "text-purple-700",
-  image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop"
-},
-{
-  id: 10,
-  title: "Technicien en Génie Civil",
-  description: "Formation aux techniques de construction, étude de sols, calcul de structures et gestion de projets BTP. Expertise en lecture de plans et contrôle qualité des ouvrages.",
-  icon: <HardHat className="w-8 h-8" />,
-  color: "from-yellow-500 to-yellow-600",
-  bgColor: "bg-yellow-50",
-  textColor: "text-yellow-700",
-  image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop"
-},
-{
-  id: 11,
-  title: "Technicien en Énergies Renouvelables",
-  description: "Spécialiste de l'installation et maintenance des systèmes solaires, éoliens et autres technologies vertes. Formation aux normes environnementales et efficacité énergétique.",
-  icon: <Zap className="w-8 h-8" />,
-  color: "from-emerald-500 to-emerald-600",
-  bgColor: "bg-emerald-50",
-  textColor: "text-emerald-700",
-  image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=400&h=300&fit=crop"
-},
-{
-  id: 12,
-  title: "Technicien en Électronique Industrielle",
-  description: "Maîtrise des systèmes électroniques industriels, automatismes et programmation d'automates. Compétences en diagnostic de pannes et optimisation des processus automatisés.",
-  icon: <CircuitBoard className="w-8 h-8" />,
-  color: "from-indigo-500 to-indigo-600",
-  bgColor: "bg-indigo-50",
-  textColor: "text-indigo-700",
-  image: "https://images.pexels.com/photos/32588544/pexels-photo-32588544.jpeg"
-},
-];
+      id: 8,
+      title: "Technicien en Maintenance Industrielle",
+      description: "Formation complète en maintenance préventive et corrective des équipements industriels. Maîtrise des techniques de diagnostic, réparation et optimisation des machines de production.",
+      icon: <Settings className="w-8 h-8" />,
+      color: "from-green-500 to-green-600",
+      bgColor: "bg-green-50",
+      textColor: "text-green-700",
+      image: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=400&h=300&fit=crop",
+      slug: "technicien-maintenance-industrielle"
+    },
+    {
+      id: 9,
+      title: "Technicien Réseaux et Télécommunications",
+      description: "Spécialisation dans l'installation, la configuration et la maintenance des réseaux informatiques et systèmes de télécommunications. Compétences en sécurité réseau et administration système.",
+      icon: <Wifi className="w-8 h-8" />,
+      color: "from-purple-500 to-purple-600",
+      bgColor: "bg-purple-50",
+      textColor: "text-purple-700",
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop",
+      slug: "technicien-reseaux-telecoms"
+    },
+    {
+      id: 10,
+      title: "Technicien en Génie Civil",
+      description: "Formation aux techniques de construction, étude de sols, calcul de structures et gestion de projets BTP. Expertise en lecture de plans et contrôle qualité des ouvrages.",
+      icon: <HardHat className="w-8 h-8" />,
+      color: "from-yellow-500 to-yellow-600",
+      bgColor: "bg-yellow-50",
+      textColor: "text-yellow-700",
+      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop",
+      slug: "technicien-genie-civil"
+    },
+    {
+      id: 11,
+      title: "Technicien en Énergies Renouvelables",
+      description: "Spécialiste de l'installation et maintenance des systèmes solaires, éoliens et autres technologies vertes. Formation aux normes environnementales et efficacité énergétique.",
+      icon: <Zap className="w-8 h-8" />,
+      color: "from-emerald-500 to-emerald-600",
+      bgColor: "bg-emerald-50",
+      textColor: "text-emerald-700",
+      image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=400&h=300&fit=crop",
+      slug: "technicien-energies-renouvelables"
+    },
+    {
+      id: 12,
+      title: "Technicien en Électronique Industrielle",
+      description: "Maîtrise des systèmes électroniques industriels, automatismes et programmation d'automates. Compétences en diagnostic de pannes et optimisation des processus automatisés.",
+      icon: <CircuitBoard className="w-8 h-8" />,
+      color: "from-indigo-500 to-indigo-600",
+      bgColor: "bg-indigo-50",
+      textColor: "text-indigo-700",
+      image: "https://images.pexels.com/photos/32588544/pexels-photo-32588544.jpeg",
+      slug: "technicien-electronique-industrielle"
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -183,26 +189,25 @@ const Technicien = () => {
 
               {/* Card Body */}
               <div className="p-6 bg-white">
-                <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
                   {program.description}
                 </p>
                 
                 {/* Action Buttons */}
                 <div className="flex space-x-3">
-                   <Link
-                                                     to="/techaidecomptable">
-                  <button className={`flex-1 bg-gradient-to-r ${program.color} text-white py-2 px-4 rounded-lg text-sm font-medium hover:opacity-90 transition-all duration-200 transform hover:scale-105`}>
-                    En savoir plus
-                  </button>
+                  <Link 
+                    to={`/technicien/${program.slug}`}
+                    className="flex-1"
+                  >
+                    <button className={`w-full bg-gradient-to-r ${program.color} text-white py-2 px-4 rounded-lg text-sm font-medium hover:opacity-90 transition-all duration-200 transform hover:scale-105`}>
+                      En savoir plus
+                    </button>
                   </Link>
                   <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-gray-400 transition-all duration-200">
                     Brochure
                   </button>
                 </div>
               </div>
-
-              {/* Hover Effect Border */}
-              <div className={`absolute inset-0 border-2 border-transparent rounded-xl group-hover:border-gradient-to-r group-hover:${program.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}></div>
             </div>
           ))}
         </div>
@@ -223,14 +228,16 @@ const Technicien = () => {
                 Contactez-nous pour plus d'informations sur nos programmes de formation
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/contact" >
-                <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
-                  Nous contacter
-                </button>
+                <Link to="/contact">
+                  <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
+                    Nous contacter
+                  </button>
                 </Link>
-                <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200 transform hover:scale-105">
-                  Télécharger la brochure
-                </button>
+                <Link to="/vae">
+                  <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200 transform hover:scale-105">
+                    Découvrir la VAE
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

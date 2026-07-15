@@ -97,7 +97,7 @@ export default function VAESection() {
                 <div className="text-gray-600 text-sm">Délai de réponse</div>
               </div>
               <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow border border-gray-100">
-                <div className="text-4xl font-bold text-orange-600 mb-2">15+</div>
+                <div className="text-4xl font-bold text-orange-600 mb-2">200+</div>
                 <div className="text-gray-600 text-sm">Domaines couverts</div>
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function VAESection() {
                     "La VAE m'a permis d'obtenir mon Master Professionnel en valorisant 15 ans d'expérience. 
                     Un processus fluide et un accompagnement exceptionnel."
                   </p>
-                  <p className="text-sm font-semibold mt-2 text-white">— Karim B., Chef de projet</p>
+                  <p className="text-sm font-semibold mt-2 text-white">- Karim B., Chef de projet</p>
                 </div>
               </div>
             </div>

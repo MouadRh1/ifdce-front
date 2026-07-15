@@ -1,31 +1,32 @@
-// src/page/FormationDetail.jsx
+// src/page/LicenceDetails.jsx
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
-  Globe, HardHat, BarChart2, Building2,
   Clock, Monitor, GraduationCap, Award,
   Download, UserPlus, Target, LayoutDashboard,
   ClipboardList, BookOpen, FileText, Calendar,
   Briefcase, Phone, Mail, MapPin, CheckCircle2,
   CircleCheck, FileDown, ChevronRight, ExternalLink,
+  Database, Calculator, Briefcase as BriefcaseIcon, FileText as FileTextIcon, 
+  Building, Globe, HardHat, Compass
 } from 'lucide-react';
 
-// ─── Données des 4 formations ────────────────────────────────────────────────
-const formations = {
+// ─── Données de TOUTES les Licences Professionnelles ─────────────────────────
+const licenceFormations = {
   'licence-geomatique': {
     id: 'licence-geomatique',
     level: 'Licence Pro',
     levelStyle: 'blue',
     icon: Globe,
     title: 'Licence Professionnelle en Géomatique et Ingénierie Topographique',
-    description: "Maîtrisez les technologies géospatiales, les systèmes d'information géographique et la topographie de précision pour intégrer les secteurs public et privé.",
+    description: "Formez-vous aux métiers de la géomatique et de l'ingénierie topographique. Maîtrisez les technologies géospatiales, les systèmes d'information géographique (SIG) et les techniques de topographie de précision.",
     stats: [
       { icon: Clock, label: '1 an (2 semestres)' },
       { icon: Monitor, label: 'Mode hybride' },
       { icon: GraduationCap, label: 'Licence Pro' },
       { icon: MapPin, label: 'Maroc' },
     ],
-    objective: "Ce programme forme des techniciens capables de collecter, traiter et analyser des données géographiques et topographiques. Les diplômés maîtrisent les outils SIG, la cartographie numérique et les méthodes d'arpentage.",
+    objective: "Ce programme forme des professionnels capables de collecter, traiter et analyser des données géographiques et topographiques. Les diplômés maîtrisent les outils SIG, la cartographie numérique et les méthodes d'arpentage pour intervenir dans l'aménagement du territoire, l'urbanisme et les travaux publics.",
     features: [
       { icon: Clock, label: 'Durée', value: '1 an' },
       { icon: Monitor, label: 'Modalité', value: 'Hybride' },
@@ -34,33 +35,46 @@ const formations = {
     ],
     prereqMain: "Bac+2 en topographie, géographie, Génie civil, dessin de bâtiment ou dans un domaine scientifique.",
     prereqs: [
-      "Avoir interrompu ses études pendant au moins deux sessions consécutives ou une année scolaire complète.",
-      "Avoir complété au moins une année d'études postsecondaires échelonnée sur une période d'un an ou plus.",
+      "Avoir interrompu ses études pendant au moins deux sessions consécutives.",
+      "Avoir complété au moins une année d'études postsecondaires.",
       "Justifier d'une expérience professionnelle d'au moins 2 ans en géographie, topographie ou ingénierie.",
     ],
     year1: [
-      'Topographie générale', 'Cartographie numérique', 'Introduction aux SIG',
-      'Géodésie et systèmes de référence', 'Photogrammétrie', 'Mathématiques appliquées',
-      'Télédétection', 'Bureautique et logiciels SIG', 'Droit foncier et urbanisme', 'Projet tutoré S1',
+      'Topographie générale', 
+      'Cartographie numérique', 
+      'Introduction aux SIG',
+      'Géodésie et systèmes de référence', 
+      'Photogrammétrie', 
+      'Mathématiques appliquées',
+      'Télédétection', 
+      'Bureautique et logiciels SIG', 
+      'Droit foncier et urbanisme', 
+      'Projet tutoré S1'
     ],
     year2: [
-      'SIG avancés et analyse spatiale', 'Topographie de précision', 'Drone et LiDAR',
-      'Gestion de projets géomatiques', 'Bases de données géographiques', 'Stage professionnel (3 mois)',
+      'SIG avancés et analyse spatiale', 
+      'Topographie de précision', 
+      'Drone et LiDAR',
+      'Gestion de projets géomatiques', 
+      'Bases de données géographiques', 
+      'Stage professionnel (3 mois)'
     ],
     careers: [
-      "Technicien géomaticien", "Topographe en bureau d'études",
-      "Opérateur SIG en collectivité", "Chargé de cartographie", "Technicien foncier",
+      "Technicien géomaticien", 
+      "Topographe en bureau d'études",
+      "Opérateur SIG en collectivité", 
+      "Chargé de cartographie", 
+      "Technicien foncier"
     ],
     brochureUrl: '/brochures/Licence_Geomatique.pdf',
   },
-
   'licence-genie-civil': {
     id: 'licence-genie-civil',
     level: 'Licence Pro',
-    levelStyle: 'blue',
+    levelStyle: 'orange',
     icon: HardHat,
     title: 'Licence Professionnelle en Génie Civil et Ingénierie Topographique',
-    description: "Conception et gestion de projets d'infrastructure. Formez-vous aux méthodes du génie civil et à la topographie appliquée aux chantiers de BTP.",
+    description: "Acquérez les compétences nécessaires pour concevoir, gérer et réaliser des projets d'infrastructure et de construction. Cette formation combine les fondamentaux du génie civil avec les techniques topographiques avancées.",
     stats: [
       { icon: Clock, label: '1 an (2 semestres)' },
       { icon: Monitor, label: 'Mode hybride' },
@@ -77,127 +91,301 @@ const formations = {
     prereqMain: "Bac+2 en topographie, géographie, Génie civil, dessin de bâtiment ou dans un domaine scientifique.",
     prereqs: [
       "Avoir interrompu ses études pendant au moins deux sessions consécutives.",
-      "Avoir complété une année d'études postsecondaires sur une période d'un an ou plus.",
+      "Avoir complété une année d'études postsecondaires.",
       "Justifier de 2 ans d'expérience en BTP, génie civil ou travaux publics.",
     ],
     year1: [
-      "Résistance des matériaux", "Mécanique des sols", "Hydraulique appliquée",
-      "Topographie de chantier", "Dessin technique assisté (AutoCAD)", "Matériaux de construction",
-      "Calcul de structures", "Législation du BTP", "Gestion de chantier", "Projet tutoré S1",
+      "Résistance des matériaux", 
+      "Mécanique des sols", 
+      "Hydraulique appliquée",
+      "Topographie de chantier", 
+      "Dessin technique assisté (AutoCAD)", 
+      "Matériaux de construction",
+      "Calcul de structures", 
+      "Législation du BTP", 
+      "Gestion de chantier", 
+      "Projet tutoré S1"
     ],
     year2: [
-      'Béton armé et précontraint', 'Voirie et réseaux divers (VRD)', 'Topographie avancée',
-      'Gestion de projet BTP', 'Métrés et estimation des coûts', 'Stage professionnel (3 mois)',
+      'Béton armé et précontraint', 
+      'Voirie et réseaux divers (VRD)', 
+      'Topographie avancée',
+      'Gestion de projet BTP', 
+      'Métrés et estimation des coûts', 
+      'Stage professionnel (3 mois)'
     ],
     careers: [
-      'Conducteur de travaux junior', 'Technicien génie civil',
-      'Dessinateur-projeteur BTP', 'Technicien VRD', 'Assistant chef de chantier',
+      'Conducteur de travaux junior', 
+      'Technicien génie civil',
+      'Dessinateur-projeteur BTP', 
+      'Technicien VRD', 
+      'Assistant chef de chantier'
     ],
     brochureUrl: '/brochures/Licence_Genie_Civil.pdf',
   },
-
-  'master-geomatique': {
-    id: 'master-geomatique',
-    level: 'Master Pro',
-    levelStyle: 'dark',
-    icon: BarChart2,
-    title: 'Master Professionnel en Géomatique et Ingénierie Topographique',
-    description: "Expertise avancée en systèmes d'information géographique. Pilotez des projets complexes alliant big data géospatial, modélisation 3D et intelligence territoriale.",
+  'licence-bdd-web': {
+    id: 'licence-bdd-web',
+    level: 'Licence Pro',
+    levelStyle: 'blue',
+    icon: Database,
+    title: 'Licence Professionnelle Administration de Base de Donnée & Technologies WEB',
+    description: "L'objectif de cette licence professionnelle est la formation de développeurs spécialistes des nouvelles technologies de construction d'applications mobiles et web.",
     stats: [
-      { icon: Clock, label: '2 ans (4 semestres)' },
+      { icon: Clock, label: '1 an (2 semestres)' },
       { icon: Monitor, label: 'Mode hybride' },
-      { icon: GraduationCap, label: 'Master Pro' },
+      { icon: GraduationCap, label: 'Licence Pro' },
       { icon: MapPin, label: 'Maroc' },
     ],
-    objective: "Ce master forme des experts capables de concevoir et piloter des systèmes d'information géographique complexes, d'exploiter la télédétection avancée et de manager des équipes techniques pluridisciplinaires.",
+    objective: "Former des développeurs capables de concevoir et développer des applications web et mobiles en maîtrisant les bases de données et les technologies de pointe.",
     features: [
-      { icon: Clock, label: 'Durée', value: '2 ans' },
+      { icon: Clock, label: 'Durée', value: '1 an' },
       { icon: Monitor, label: 'Modalité', value: 'Hybride' },
-      { icon: GraduationCap, label: 'Encadrement', value: 'Expert' },
-      { icon: Award, label: 'Niveau', value: 'Bac +5' },
+      { icon: GraduationCap, label: 'Encadrement', value: 'Personnalisé' },
+      { icon: Award, label: 'Niveau', value: 'Bac +3' },
     ],
-    prereqMain: "Être titulaire d'une Licence (Bac+3) en géomatique, géographie, topographie ou domaine scientifique équivalent.",
+    prereqMain: "Bac+2 en informatique, développement web ou domaine scientifique.",
     prereqs: [
-      'Licence professionnelle ou académique dans un domaine scientifique ou technique.',
-      'Dossier de candidature incluant lettre de motivation et CV détaillé.',
-      'Entretien de sélection avec la commission pédagogique.',
+      "Avoir un niveau Bac+2 en informatique.",
+      "Ou justifier d'une expérience professionnelle de 2 ans en développement.",
+      "Passer un test de positionnement si nécessaire.",
     ],
     year1: [
-      'SIG avancés (ArcGIS / QGIS Pro)', 'Analyse spatiale et géostatistiques',
-      'Télédétection satellitaire avancée', 'Modélisation 3D du terrain (LiDAR)',
-      'Bases de données géographiques (PostGIS)', 'Programmation géospatiale (Python)',
-      'Drone mapping et photogrammétrie avancée', 'Infrastructure de données spatiales',
-      'Gestion de projets SIG', 'Séminaire de recherche',
+      'Programmation web', 
+      'Bases de données SQL/NoSQL', 
+      'Développement mobile',
+      'Architecture logicielle', 
+      'Design patterns', 
+      'Frameworks JavaScript',
+      'API et Web Services'
     ],
     year2: [
-      'Intelligence artificielle appliquée à la géomatique', 'Big data géospatial',
-      'Urbanisme et aménagement du territoire', 'Géomatique et développement durable',
-      "Management d'équipes techniques", 'Mémoire professionnel / Stage long (6 mois)',
+      'Développement avancé', 
+      'DevOps', 
+      'Sécurité informatique',
+      'Intelligence artificielle', 
+      'Stage professionnel (3 mois)'
     ],
     careers: [
-      "Chef de projet SIG", "Ingénieur géomaticien senior",
-      "Consultant en géo-intelligence", "Responsable données spatiales",
-      "Directeur de bureau d'études géographiques",
+      "Développeur web", 
+      "Développeur mobile", 
+      "Administrateur BDD",
+      "Chef de projet technique"
     ],
-    brochureUrl: '/brochures/Master_Geomatique.pdf',
+    brochureUrl: '/brochures/Licence_BDD_WEB.pdf',
   },
-
-  "master-genie-civil": {
-    id: 'master-genie-civil',
-    level: 'Master Pro',
-    levelStyle: 'dark',
-    icon: Building2,
-    title: 'Master Professionnel en Génie Civil et Ingénierie Topographique',
-    description: "Management de projets d'ingénierie civile et topographique à grande échelle. Pilotez infrastructures, BIM et grands travaux avec une expertise de haut niveau.",
+  'licence-comptabilite': {
+    id: 'licence-comptabilite',
+    level: 'Licence Pro',
+    levelStyle: 'green',
+    icon: Calculator,
+    title: 'Licence Professionnelle Comptabilité, Finance, Audit',
+    description: "Cette formation a pour objectifs de former des compétences capables de participer au Management des Organisations dans les domaines comptables et financiers.",
     stats: [
-      { icon: Clock, label: '2 ans (4 semestres)' },
+      { icon: Clock, label: '1 an (2 semestres)' },
       { icon: Monitor, label: 'Mode hybride' },
-      { icon: GraduationCap, label: 'Master Pro' },
+      { icon: GraduationCap, label: 'Licence Pro' },
       { icon: MapPin, label: 'Maroc' },
     ],
-    objective: "Ce master forme des ingénieurs capables de diriger des projets d'infrastructures complexes : routes, ponts, barrages et bâtiments, en intégrant le BIM, le management des risques et la topographie de précision.",
+    objective: "Former des professionnels capables de maîtriser les techniques du contrôle, de la Finance et d'Audit pour participer au management des organisations.",
     features: [
-      { icon: Clock, label: 'Durée', value: '2 ans' },
+      { icon: Clock, label: 'Durée', value: '1 an' },
       { icon: Monitor, label: 'Modalité', value: 'Hybride' },
-      { icon: GraduationCap, label: 'Encadrement', value: 'Expert' },
-      { icon: Award, label: 'Niveau', value: 'Bac +5' },
+      { icon: GraduationCap, label: 'Encadrement', value: 'Personnalisé' },
+      { icon: Award, label: 'Niveau', value: 'Bac +3' },
     ],
-    prereqMain: "Être titulaire d'une Licence (Bac+3) en génie civil, BTP, géotechnique ou domaine d'ingénierie connexe.",
+    prereqMain: "Bac+2 en comptabilité, gestion ou finance.",
     prereqs: [
-      'Licence professionnelle ou académique en génie civil ou domaine technique.',
-      'Dossier complet : relevés de notes, lettre de motivation, CV.',
-      'Entretien de sélection avec jury pédagogique.',
+      "Avoir un niveau Bac+2 en comptabilité.",
+      "Ou justifier d'une expérience professionnelle de 2 ans en finance.",
+      "Passer un test de positionnement.",
     ],
     year1: [
-      'Structures avancées (béton précontraint, acier)', 'Géotechnique et fondations profondes',
-      'BIM (Revit / Navisworks)', 'Hydraulique et hydrologie urbaine',
-      'Topographie de haute précision', 'Management de projet (PMI/PMP)',
-      'Développement durable en génie civil', 'Droit des marchés publics',
-      'Analyse des risques et sécurité chantier', 'Séminaire professionnel',
+      'Comptabilité générale et approfondie', 
+      'Analyse financière', 
+      'Audit et contrôle',
+      'Gestion de trésorerie', 
+      'Fiscalité', 
+      'Droit des affaires'
     ],
     year2: [
-      "Grands ouvrages d'art (ponts, tunnels)", "Smart city et infrastructures intelligentes",
-      "Gestion financière de projets d'ingénierie", "Topographie satellitaire (GNSS)",
-      "Leadership et management d'équipes", "Mémoire professionnel / Stage long (6 mois)",
+      'Comptabilité avancée', 
+      'Contrôle de gestion', 
+      'Finance d\'entreprise',
+      'Reporting financier', 
+      'Stage professionnel (3 mois)'
     ],
     careers: [
-      'Directeur de travaux', 'Ingénieur structure senior',
-      'Chef de projet BIM', 'Responsable ingénierie BTP',
-      'Consultant en infrastructure publique',
+      "Expert comptable", 
+      "Auditeur financier", 
+      "Contrôleur de gestion",
+      "Analyste financier"
     ],
-    brochureUrl: '/brochures/Master_Genie_Civil.pdf',
+    brochureUrl: '/brochures/Licence_Comptabilite.pdf',
+  },
+  'licence-gestion': {
+    id: 'licence-gestion',
+    level: 'Licence Pro',
+    levelStyle: 'purple',
+    icon: BriefcaseIcon,
+    title: 'Licence Professionnelle Gestion des Entreprises',
+    description: "La licence Gestion des entreprises est une formation à la fois délibérément généraliste et résolument tournée vers le monde professionnel.",
+    stats: [
+      { icon: Clock, label: '1 an (2 semestres)' },
+      { icon: Monitor, label: 'Mode hybride' },
+      { icon: GraduationCap, label: 'Licence Pro' },
+      { icon: MapPin, label: 'Maroc' },
+    ],
+    objective: "Former des managers capables de gérer et diriger des entreprises en maîtrisant les fondamentaux du management, du marketing et de la finance.",
+    features: [
+      { icon: Clock, label: 'Durée', value: '1 an' },
+      { icon: Monitor, label: 'Modalité', value: 'Hybride' },
+      { icon: GraduationCap, label: 'Encadrement', value: 'Personnalisé' },
+      { icon: Award, label: 'Niveau', value: 'Bac +3' },
+    ],
+    prereqMain: "Bac+2 en gestion, économie ou domaine connexe.",
+    prereqs: [
+      "Avoir un niveau Bac+2 en gestion.",
+      "Ou justifier d'une expérience professionnelle de 2 ans en management.",
+      "Passer un test de positionnement.",
+    ],
+    year1: [
+      'Management des organisations', 
+      'Marketing stratégique', 
+      'Gestion financière',
+      'Ressources humaines', 
+      'Stratégie d\'entreprise', 
+      'Droit des affaires'
+    ],
+    year2: [
+      'Leadership', 
+      'Gestion de projet', 
+      'Entrepreneuriat',
+      'Business plan', 
+      'Stage professionnel (3 mois)'
+    ],
+    careers: [
+      "Manager", 
+      "Responsable d'équipe", 
+      "Chef d'entreprise",
+      "Consultant en gestion"
+    ],
+    brochureUrl: '/brochures/Licence_Gestion.pdf',
+  },
+  'licence-notariat': {
+    id: 'licence-notariat',
+    level: 'Licence Pro',
+    levelStyle: 'indigo',
+    icon: FileTextIcon,
+    title: 'Licence Professionnelle Métiers du Notariat',
+    description: "Pendant la licence professionnelle en entrepreneuriat, les étudiants sont formés à la création et à la gestion d'une entreprise, et d'un produit.",
+    stats: [
+      { icon: Clock, label: '1 an (2 semestres)' },
+      { icon: Monitor, label: 'Mode hybride' },
+      { icon: GraduationCap, label: 'Licence Pro' },
+      { icon: MapPin, label: 'Maroc' },
+    ],
+    objective: "Former des professionnels capables d'exercer les métiers du notariat et de l'immobilier en maîtrisant le droit, la fiscalité et la gestion de patrimoine.",
+    features: [
+      { icon: Clock, label: 'Durée', value: '1 an' },
+      { icon: Monitor, label: 'Modalité', value: 'Hybride' },
+      { icon: GraduationCap, label: 'Encadrement', value: 'Personnalisé' },
+      { icon: Award, label: 'Niveau', value: 'Bac +3' },
+    ],
+    prereqMain: "Bac+2 en droit, gestion ou domaine juridique.",
+    prereqs: [
+      "Avoir un niveau Bac+2 en droit.",
+      "Ou justifier d'une expérience professionnelle de 2 ans dans le juridique.",
+      "Passer un test de positionnement.",
+    ],
+    year1: [
+      'Droit civil', 
+      'Droit des contrats', 
+      'Fiscalité et droit des affaires',
+      'Gestion de patrimoine', 
+      'Droit immobilier'
+    ],
+    year2: [
+      'Droit notarial', 
+      'Rédaction d\'actes', 
+      'Gestion de clientèle',
+      'Déontologie du notariat', 
+      'Stage professionnel (3 mois)'
+    ],
+    careers: [
+      "Assistant notarial", 
+      "Responsable juridique", 
+      "Gestionnaire de patrimoine",
+      "Conseiller en immobilier"
+    ],
+    brochureUrl: '/brochures/Licence_Notariat.pdf',
+  },
+  'licence-genie-civil-base': {
+    id: 'licence-genie-civil-base',
+    level: 'Licence Pro',
+    levelStyle: 'amber',
+    icon: Building,
+    title: 'Licence Professionnelle Génie Civil',
+    description: "Cette formation permettra aux étudiants d'acquérir les compétences suivantes : Connaissance des différents types de matériaux de construction. Acquisition des techniques principales utilisées dans la construction.",
+    stats: [
+      { icon: Clock, label: '1 an (2 semestres)' },
+      { icon: Monitor, label: 'Mode hybride' },
+      { icon: GraduationCap, label: 'Licence Pro' },
+      { icon: MapPin, label: 'Maroc' },
+    ],
+    objective: "Former des techniciens supérieurs capables de participer à la conception, à la réalisation et au suivi de projets de construction.",
+    features: [
+      { icon: Clock, label: 'Durée', value: '1 an' },
+      { icon: Monitor, label: 'Modalité', value: 'Hybride' },
+      { icon: GraduationCap, label: 'Encadrement', value: 'Personnalisé' },
+      { icon: Award, label: 'Niveau', value: 'Bac +3' },
+    ],
+    prereqMain: "Bac+2 en génie civil, BTP ou domaine technique.",
+    prereqs: [
+      "Avoir un niveau Bac+2 en génie civil.",
+      "Ou justifier d'une expérience professionnelle de 2 ans dans le BTP.",
+      "Passer un test de positionnement.",
+    ],
+    year1: [
+      'Matériaux de construction', 
+      'Résistance des matériaux', 
+      'Topographie',
+      'Dessin technique et plans', 
+      'Gestion de chantier'
+    ],
+    year2: [
+      'Calcul de structures', 
+      'VRD', 
+      'BIM et modélisation',
+      'Sécurité et normes', 
+      'Stage professionnel (3 mois)'
+    ],
+    careers: [
+      "Technicien en génie civil", 
+      "Assistant conducteur de travaux", 
+      "Contrôleur technique",
+      "Responsable de chantier"
+    ],
+    brochureUrl: '/brochures/Licence_Genie_Civil_Base.pdf',
   },
 };
 
 // ─── Styles dynamiques selon le niveau ────────────────────────────────────────
 const heroStyles = {
   blue: 'from-slate-900 via-blue-950 to-blue-700',
-  dark: 'from-slate-900 via-slate-800 to-slate-700',
+  orange: 'from-slate-900 via-orange-900 to-orange-700',
+  green: 'from-slate-900 via-green-900 to-green-700',
+  purple: 'from-slate-900 via-purple-900 to-purple-700',
+  indigo: 'from-slate-900 via-indigo-900 to-indigo-700',
+  amber: 'from-slate-900 via-amber-900 to-amber-700',
 };
 
 const levelBadgeStyles = {
   blue: 'bg-blue-500/20 border-blue-400/30 text-blue-300',
-  dark: 'bg-slate-600/40 border-slate-400/30 text-slate-300',
+  orange: 'bg-orange-500/20 border-orange-400/30 text-orange-300',
+  green: 'bg-green-500/20 border-green-400/30 text-green-300',
+  purple: 'bg-purple-500/20 border-purple-400/30 text-purple-300',
+  indigo: 'bg-indigo-500/20 border-indigo-400/30 text-indigo-300',
+  amber: 'bg-amber-500/20 border-amber-400/30 text-amber-300',
 };
 
 const featureIconColors = ['text-blue-500', 'text-purple-500', 'text-green-500', 'text-amber-500'];
@@ -211,7 +399,7 @@ const TABS = [
 ];
 
 // ─── Composant Brochure ──────────────────────────────────────────────────────
-const BrochureDownload = ({ brochureUrl, title }) => {
+const BrochureDownload = ({ brochureUrl }) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState(null);
 
@@ -225,20 +413,11 @@ const BrochureDownload = ({ brochureUrl, title }) => {
     setDownloadError(null);
 
     try {
-      // Simuler un téléchargement
-      // Dans la réalité, vous pouvez utiliser window.open(brochureUrl, '_blank')
-      // ou fetch pour télécharger le fichier
-      
-      // Vérifier si le fichier existe (simulé)
       const response = await fetch(brochureUrl, { method: 'HEAD' });
-      
       if (response.ok) {
-        // Ouvrir le PDF dans un nouvel onglet ou le télécharger
         window.open(brochureUrl, '_blank');
       } else {
-        // Si le fichier n'existe pas, simuler un téléchargement
-        // Dans la réalité, vous afficheriez un message d'erreur
-        setDownloadError('La brochure n\'est pas encore disponible. Veuillez nous contacter.');
+        setDownloadError('La brochure n\'est pas encore disponible.');
       }
     } catch (error) {
       console.error('Erreur de téléchargement:', error);
@@ -271,33 +450,27 @@ const BrochureDownload = ({ brochureUrl, title }) => {
           </>
         )}
       </button>
-      
-      {downloadError && (
-        <p className="text-red-500 text-xs text-center">{downloadError}</p>
-      )}
-      
-      <p className="text-xs text-slate-400 text-center">
-        Format PDF · Détail des modules et programme complet
-      </p>
+      {downloadError && <p className="text-red-500 text-xs text-center">{downloadError}</p>}
+      <p className="text-xs text-slate-400 text-center">Format PDF · Détail des modules et programme complet</p>
     </div>
   );
 };
 
 // ─── Composant Principal ──────────────────────────────────────────────────────
-export default function FormationDetail() {
+export default function LicenceDetails() {
   const { slug } = useParams();
   const [activeTab, setActiveTab] = useState('overview');
   
-  const f = formations[slug];
+  const f = licenceFormations[slug];
 
   if (!f) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-gray-500">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-300 mb-4">404</h1>
-          <p className="text-gray-500 mb-6">Formation introuvable.</p>
-          <Link to="/" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-            Retour à l'accueil
+          <p className="text-gray-500 mb-6">Licence Professionnelle introuvable.</p>
+          <Link to="/formations" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+            Voir toutes les formations
           </Link>
         </div>
       </div>
@@ -305,12 +478,14 @@ export default function FormationDetail() {
   }
 
   const HeroIcon = f.icon;
+  const levelStyle = heroStyles[f.levelStyle] || heroStyles.blue;
+  const badgeStyle = levelBadgeStyles[f.levelStyle] || levelBadgeStyles.blue;
 
   return (
     <div className="min-h-screen bg-slate-50">
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
-      <div className={`relative bg-gradient-to-br ${heroStyles[f.levelStyle]} overflow-hidden`}>
+      <div className={`relative bg-gradient-to-br ${levelStyle} overflow-hidden`}>
         <div className="absolute top-0 right-0 w-72 h-72 rounded-full bg-white/5 -translate-y-1/3 translate-x-1/3 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-white/5 translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
@@ -321,8 +496,16 @@ export default function FormationDetail() {
             <ChevronRight size={12} />
             <Link to="/formations" className="hover:text-white transition-colors">Formations</Link>
             <ChevronRight size={12} />
+            <Link to="/LicenceProfessionnelle" className="hover:text-white transition-colors">Licences Pro</Link>
+            <ChevronRight size={12} />
             <span className="text-slate-300">{f.level}</span>
           </div>
+
+          {/* Badge niveau */}
+          <span className={`inline-flex items-center gap-2 text-[11px] font-semibold tracking-widest uppercase border px-3 py-1.5 rounded-full mb-5 ${badgeStyle}`}>
+            <GraduationCap size={11} />
+            {f.level}
+          </span>
 
           <div className="flex items-start gap-5 mb-4">
             <div className="hidden sm:flex w-14 h-14 rounded-2xl bg-white/10 border border-white/20 items-center justify-center flex-shrink-0 mt-1">
@@ -349,10 +532,7 @@ export default function FormationDetail() {
 
           {/* CTAs */}
           <div className="flex flex-wrap gap-3 items-center">
-            <BrochureDownload 
-              brochureUrl={f.brochureUrl} 
-              title={f.title}
-            />
+            <BrochureDownload brochureUrl={f.brochureUrl} />
             <Link to="/authentification">
               <button className="inline-flex items-center gap-2 border border-white/25 hover:bg-white/10 text-white font-medium text-sm px-5 py-2.5 rounded-lg transition-colors">
                 <UserPlus size={15} />
@@ -553,10 +733,7 @@ export default function FormationDetail() {
                 <p className="text-sm text-slate-500 leading-relaxed mb-5">
                   Téléchargez la brochure complète pour accéder au détail des modules, des intervenants et des modalités d'évaluation.
                 </p>
-                <BrochureDownload 
-                  brochureUrl={f.brochureUrl} 
-                  title={f.title}
-                />
+                <BrochureDownload brochureUrl={f.brochureUrl} />
               </div>
 
               <div className="bg-gradient-to-br from-slate-900 to-blue-900 rounded-2xl p-6">

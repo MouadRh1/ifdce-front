@@ -4,7 +4,7 @@ import { FaWhatsapp } from "react-icons/fa";
 
 export default function FloatingWhatsApp() {
   // Remplacez par le vrai numéro de téléphone
-  const phoneNumber = "212665654031"; // Format international sans le +
+  const phoneNumber = "212669613040"; // Format international sans le +
   const message =
     "Bonjour%2C%20je%20souhaite%20avoir%20plus%20d%27informations%20sur%20la%20VAE%20et%20vos%20formations.";
 
